@@ -1,6 +1,6 @@
 <template>
 	<div class="top">
-		<div class="container clearfix">
+		<div class="comWidth clearfix">
 			<div class="logo fl">
 				<img src="./1.png" :alt="logoAlt">
 			</div>
@@ -14,6 +14,7 @@
 </template>
 
 <script>
+	import axios from 'axios'
 	export default {
 		data () {
 			return {
@@ -45,6 +46,9 @@
 						href: ''
 					}
 				]
+				axios.get('/navList').then((res) => {
+					console.log(res);
+				})
 			}
 		}
 	}
