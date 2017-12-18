@@ -11,9 +11,9 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-        "/navList": {
-            target: 'http://localhost:3000/navList'
-        }
+        // "/": {
+        //     target: 'http://localhost:3000'
+        // }
     },
 
     // Various Dev Server settings

@@ -10,17 +10,8 @@
   		:trigger="setting.trigger"
   		:arrow="setting.arrow"
   		>
-      <CarouselItem>
-          <div class="item">1</div>
-      </CarouselItem>
-      <CarouselItem>
-          <div class="item">2</div>
-      </CarouselItem>
-      <CarouselItem>
-          <div class="item">3</div>
-      </CarouselItem>
-      <CarouselItem>
-          <div class="item">4</div>
+      <CarouselItem v-for="item in imgs">
+        <a href="javascript:;"><img :src="item" alt=""></a>
       </CarouselItem>
     </Carousel>
 	</div>
@@ -34,22 +25,29 @@
     		setting: {
     			loop: true,
           autoplay: true,
-          autoplaySpeed: 5000,
+          autoplaySpeed: 10000,
           dots: 'inside',
           radiusDot: false,
           trigger: 'click',
           arrow: 'always'
-    		}
+    		},
+        imgs: [
+          require('./banner_01.jpg'),
+          require('./banner_02.jpg'),
+          require('./banner_03.jpg')
+        ]
     	}
     }
 	}
 </script>
 
 <style lang="scss">
-	.item {
-		background-color: #144025;
-		height: 200px;
-		line-height: 200px;
-		width: 100%;
-	}
+  .carousel {
+    a {
+      display: block;
+    }
+    img {
+      display: block;
+    }
+  }
 </style>
