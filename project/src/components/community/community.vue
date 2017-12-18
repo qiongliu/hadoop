@@ -1,82 +1,73 @@
 <template>
-	<div class="department">
-		<Tabs class="sl-title" value="department-info">
-        <TabPane label="科室简介" name="department-info">
-					<Row>
-						<Col span="8" v-for="item in info">
-							<Card class="card">
-								<p slot="title">{{item.name}}</p>
-								<a href="javascript:;" slot="extra"><Icon class="more" type="more"></Icon></a>
-								<p>{{item.intr}}</p>
-								<Tag color="blue">负责人：{{item.leader}}</Tag>
-								<Tag>科室人数：{{item.num}}</Tag>
-							</Card>
-						</Col>
-					</Row>
-        </TabPane>
+	<div class="community">
+		<Tabs type="card" class="sl-title" value="sl-card-info">
+      <TabPane label="社区" name="sl-card-info">
+				<Row>
+					<Col span="6" v-for="item in info">
+						<my-card :info="item"></my-card>
+					</Col>
+				</Row>
+      </TabPane>
+      <TabPane label="村">
+				<Row>
+					<Col span="6" v-for="item in village">
+						<my-card :info="item"></my-card>
+					</Col>
+				</Row>
+      </TabPane>
     </Tabs>
 	</div>
 </template>
 
 <script>
+	import myCard from 'base/my-card/my-card'
+
 	export default {
 		data () {
 			return {
 				info: [
 					{
 						id: 0,
-						name: '党政办',
+						name: '长乐西苑社区',
 						intr: '负责城乡居民养老、医疗保险业务；负责劳动保障、小额担保贷款业务；负责社区管理等业务；',
 						leader: '庞青云',
 						num: "10人"
 					},
 					{
 						id: 1,
-						name: '经济发展科',
+						name: '青东社区',
 						intr: '负责城乡居民养老、医疗保险业务；负责劳动保障、小额担保贷款业务；负责社区管理等业务；',
 						leader: '庞青云',
 						num: "10人"
 					},
 					{
 						id: 2,
-						name: '劳动保障科',
+						name: '海红社区',
 						intr: '负责城乡居民养老、医疗保险业务；负责劳动保障、小额担保贷款业务；负责社区管理等业务；',
 						leader: '庞青云',
 						num: "10人"
-					},{
-						id: 3,
-						name: '财政所',
+					}
+				],
+				village: [
+					{
+						id: 0,
+						name: '东扬善村',
 						intr: '负责城乡居民养老、医疗保险业务；负责劳动保障、小额担保贷款业务；负责社区管理等业务；',
 						leader: '庞青云',
 						num: "10人"
 					},
 					{
-						id: 4,
-						name: '社会事务科',
+						id: 1,
+						name: '樊寨村',
 						intr: '负责城乡居民养老、医疗保险业务；负责劳动保障、小额担保贷款业务；负责社区管理等业务；',
 						leader: '庞青云',
 						num: "10人"
 					}
 				]
 			}
+		},
+		components: {
+			myCard
 		}
 	}
 </script>
-
-<style lang="scss">
-	@import '../../common/css/variable.scss';
-	.department {
-		.card {
-			width: 200px;
-			max-height: 240px;
-			margin-bottom: 16px;
-			overflow: hidden;
-		}
-		.more {
-			color: $c-text-more;
-		}
-	}
-	.sl-title .ivu-tabs-tab-active {
-		font-size: $fz-lg;
-	}
-</style>

@@ -1,18 +1,19 @@
 <template>
 	<div class="index">
-		<div class="banner">
+		<div class="sl-banner">
 			<carousel></carousel>
 			<login-in></login-in>
 		</div>
-		<div class="content comWidth">
+		<div class="sl-content comWidth">
 			<Row :gutter="32">
 				<Col span="16">
 					<department></department>
 				</Col>
 				<Col span="8">
-					汉城动态
+					<dynamic></dynamic>
 				</Col>
 			</Row>
+			<community></community>
 		</div>
 	</div>
 </template>
@@ -21,22 +22,27 @@
 	import Carousel from 'components/carousel/carousel'
 	import LoginIn from 'components/login-in/login-in'
 	import Department from 'components/department/department'
+	import Dynamic from 'components/dynamic/dynamic'
+	import Community from 'components/community/community'
 	export default {
 		components: {
 			Carousel,
 			LoginIn,
-			Department
+			Department,
+			Dynamic,
+			Community
 		}
 	}
 </script>
 
 <style lang="scss">
-	.banner {
+	.sl-banner {
 		position: relative;
 	}
-	.content {
+	.sl-content {
 		background-color: #fff;
 		border-radius: 6px;
 		margin-top: 12px;
+		padding: 14px;
 	}
 </style>

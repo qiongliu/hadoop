@@ -11,9 +11,3 @@
 
 	}
 </script>
-
-<style lang="scss">
-	p {
-		color: #000;
-	}
-</style>
