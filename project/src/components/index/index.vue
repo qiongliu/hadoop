@@ -5,16 +5,21 @@
 			<login-in></login-in>
 		</div>
 		<div class="sl-content comWidth">
-			<Row :gutter="16">
-				<Col span="16">
-					<department></department>
-				</Col>
-				<Col span="8">
-					<dynamic></dynamic>
-				</Col>
-			</Row>
-			<community></community>
+			<my-collapse :max-height="420">
+				<Row :gutter="16">
+					<Col span="16">
+						<department></department>
+					</Col>
+					<Col span="8">
+						<dynamic></dynamic>
+					</Col>
+				</Row>
+			</my-collapse>
+			<my-collapse :max-height="510">
+				<community></community>
+			</my-collapse>
 		</div>
+		<BackTop></BackTop>
 	</div>
 </template>
 
@@ -24,13 +29,15 @@
 	import Department from 'components/department/department'
 	import Dynamic from 'components/dynamic/dynamic'
 	import Community from 'components/community/community'
+	import myCollapse from 'base/my-collapse/my-collapse'
 	export default {
 		components: {
 			Carousel,
 			LoginIn,
 			Department,
 			Dynamic,
-			Community
+			Community,
+			myCollapse
 		}
 	}
 </script>
@@ -45,4 +52,5 @@
 		margin-top: 12px;
 		padding: 14px;
 	}
+	
 </style>

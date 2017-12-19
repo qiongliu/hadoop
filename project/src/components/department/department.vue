@@ -1,6 +1,6 @@
 <template>
 	<div class="department">
-		<my-tabs-card :info="info" :gridInfo="gridInfo"></my-tabs-card>
+		<my-tabs-card :info="info" :grid-info="gridInfo"></my-tabs-card>
 	</div>
 </template>
 
@@ -133,15 +133,3 @@
 	}
 </script>
 
-<style lang="scss">
-	@import '../../common/css/variable.scss';
-	.sl-title {
-		.ivu-tabs-tab-active {
-			font-size: $fz-lg;
-			padding: 8px 0;
-		}
-		.sl-title-tips {
-			margin-left: 12px;
-		}
-	}
-</style>

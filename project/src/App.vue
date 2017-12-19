@@ -4,16 +4,19 @@
     <keep-alive>
       <router-view></router-view>
     </keep-alive>
+    <m-footer></m-footer>
 	</div>
 </template>
 
 <script>
 	import mTop from 'components/m-top/m-top'
 	import mCarousel from 'components/carousel/carousel'
+  import mFooter from 'components/m-footer/m-footer'
   export default {
     components: {
     	mTop,
-    	mCarousel
+    	mCarousel,
+      mFooter
     }
   }
 </script>
