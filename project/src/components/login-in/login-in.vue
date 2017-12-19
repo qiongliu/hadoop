@@ -8,10 +8,10 @@
 				<FormItem prop="password">
 					<Input class="text" v-model="login.password" type="password" placeholder="密码"></Input>
 				</FormItem>
-				<FormItem>
+				<FormItem class="tenday">
 					<Row>
 						<Col span="10">
-							<CheckboxGroup class="tenday" v-model="login.tenday">
+							<CheckboxGroup v-model="login.tenday">
 								<Checkbox label="十天内免登录"></Checkbox>
 							</CheckboxGroup>
 						</Col>
@@ -104,11 +104,10 @@
 	}
 	.login-in {
 		position: absolute;
-		padding: 30px; 
-		top: 50px;
+		padding: 10px 30px; 
 		right: 0;
 		width: 330px;
-		height: 280px;
+		height: 230px;
 		background-color: #fff;
 		.text {
 			input {
@@ -124,9 +123,12 @@
 				font-size: $fz-xs;
 			}
 		}
-		.tenday span {
-			color: #555;
-		}
+		.tenday {
+			margin-bottom: 6px;
+			span {
+				color: #555;
+			}
+		} 
 		.btn button{
 			width: 100%;
 			height: 36px;

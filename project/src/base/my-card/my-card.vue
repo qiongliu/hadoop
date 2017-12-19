@@ -4,8 +4,8 @@
 			<p slot="title">{{info.name}}</p>
 			<a href="javascript:;" slot="extra"><Icon class="more" type="more"></Icon></a>
 			<p>{{info.intr}}</p>
-			<Tag color="blue">负责人：{{info.leader}}</Tag>
-			<Tag>科室人数：{{info.num}}</Tag>
+			<Tag color="blue">{{info.leader}}</Tag>
+			<Tag>{{info.num}}</Tag>
 		</Card>
 	</div>
 </template>
@@ -17,11 +17,6 @@
 				type: Object,
 				default: {}
 			}
-		},
-		data () {
-			return {
-				
-			}
 		}
 	}
 </script>
@@ -30,8 +25,8 @@
 	@import '../../common/css/variable.scss';
 	.sl-card {
 		.sl-card-item {
-			width: 200px;
-			max-height: 240px;
+			width: 152px;
+			// max-height: 240px;
 			margin-bottom: 16px;
 			overflow: hidden;
 		}

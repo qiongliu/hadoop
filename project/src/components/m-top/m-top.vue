@@ -1,21 +1,27 @@
 <template>
 	<div class="top">
-		<div class="comWidth clearfix">
-			<div class="logo fl">
-				<img src="./logo-w.png" :alt="logoAlt">
-			</div>
-			<ul class="nav fr">
-				<li v-for="(item,index) in navList">
+		<div class="clearfix">
+			<my-nav :navList="navList">
+				<div class="sl-logo fl">
+					<img src="./logo-w.png" :alt="logoAlt">
+				</div>
+			</my-nav>
+			<!-- <ul class="nav fr">
+				<li v-for="(item,index) in navList" :key="index">
 					<router-link :to="item.href">{{item.name}}</router-link>
 				</li>
-			</ul>
+			</ul> -->
 		</div>
 	</div>
 </template>
 
 <script>
 	import axios from 'axios'
+	import myNav from 'base/my-nav/my-nav'
 	export default {
+		components: {
+			myNav
+		},
 		data () {
 			return {
 				logoAlt: '',
@@ -30,20 +36,51 @@
 				this.logoAlt = '汉城街道综合管理服务平台'
 				this.navList = [
 					{
+						id: 0,
 						name: '首页',
-						href: 'index'
+						url: 'index'
 					},
 					{
-						name: '空间',
-						href: ''
+						id: 1,
+						name: '本周动态',
+						url: ''
 					},
 					{
-						name: '新闻',
-						href: 'news'
+						id: 2,
+						name: '科室简介',
+						url: 'news'
 					},
 					{
-						name: '视频',
-						href: ''
+						id: 3,
+						name: '社区（村）简介',
+						url: ''
+					},
+					{
+						id: 4,
+						name: '业务办理',
+						url: '',
+						sub: [
+							{
+								id: 41,
+								name: '劳动保障',
+								url: ''
+							},
+							{
+								id: 42,
+								name: '社保',
+								url: ''
+							}
+						]
+					},
+					{
+						id: 5,
+						name: '政策解读',
+						url: ''
+					},
+					{
+						id: 6,
+						name: '汉城简介',
+						url: ''
 					}
 				]
 				// axios.get('/navList').then((res) => {
@@ -56,25 +93,10 @@
 
 <style lang="scss" scoped>
 	@import "../../common/css/variable";
-
-	.top {
-		height: 60px;
-		line-height: 60px;
-		background-color: $c-bg-top;
+	.sl-logo {
+		margin-right: 12px;
 		img {
-			height: 40px;
 			vertical-align: middle;
-		}
-	}
-	.nav {
-		li {
-			float: left;
-		}
-		a {
-			display: block;
-			font-size: $fz-md;
-			color: #fff;
-			padding: 0 20px;
 		}
 	}
 </style>

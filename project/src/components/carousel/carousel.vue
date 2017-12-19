@@ -10,7 +10,7 @@
   		:trigger="setting.trigger"
   		:arrow="setting.arrow"
   		>
-      <CarouselItem v-for="item in imgs">
+      <CarouselItem v-for="(item,index) in imgs" :key="index">
         <a href="javascript:;"><img :src="item" alt=""></a>
       </CarouselItem>
     </Carousel>
@@ -48,6 +48,8 @@
     }
     img {
       display: block;
+      height: 230px;
+      width: 100%;
     }
   }
 </style>

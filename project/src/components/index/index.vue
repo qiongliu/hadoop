@@ -5,7 +5,7 @@
 			<login-in></login-in>
 		</div>
 		<div class="sl-content comWidth">
-			<Row :gutter="32">
+			<Row :gutter="16">
 				<Col span="16">
 					<department></department>
 				</Col>

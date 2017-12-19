@@ -2,7 +2,7 @@
 	<div class="news">
 		<h2>新闻</h2>
 		<ul class="content">
-			<li v-for="(item,index) in news">
+			<li v-for="(item,index) in news" :key="index">
 				<router-link 
 				:to="{path: 'hehe', query:{newsId: item.id}}">
 				{{item.title}}
