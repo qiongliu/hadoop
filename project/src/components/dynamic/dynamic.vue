@@ -1,6 +1,6 @@
 <template>
 	<div class="sl-dynamic">
-		<my-tabs :titleInfo="titleInfo">
+		<my-tab :titleInfo="titleInfo">
 			<Timeline>
         <TimelineItem v-for="item in info" :key="item.id" :color="item.grade.color">
             <p class="time">{{item.title}}</p>
@@ -8,16 +8,16 @@
         </TimelineItem>
         <TimelineItem><a href="#">查看更多</a></TimelineItem>
 	    </Timeline>
-		</my-tabs>
+		</my-tab>
 	</div>
 </template>
 
 <script>
-	import myTabs from 'base/my-tabs/my-tabs'
+	import myTab from 'base/my-tab/my-tab'
 
 	export default {
 		components: {
-			myTabs
+			myTab
 		},
 		data () {
 			return {
@@ -86,10 +86,10 @@
 						content: '为进一步提高全民安全用电意识，普及安全用电常识，传播节能理念，宣传散煤整治的重要意义，在6月16日开展“2017年节能宣传周和低碳日活动”和“2017年电力安全生产宣传咨询活动”的基础上...'
 					}
 				],
-				titleInfo: [{
-					name: '汉城动态',
-					infoNum: '24'
-				}]
+				titleInfo: {
+					name: '本周动态',
+					description: '共24条'
+				}
 			}
 		}
 	}

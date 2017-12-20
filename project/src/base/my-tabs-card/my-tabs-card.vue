@@ -14,12 +14,10 @@
 
 <script>
 	import myCard from 'base/my-card/my-card'
-	import myTabs from 'base/my-tabs/my-tabs'
 
 	export default {
 		components: {
-			myCard,
-			myTabs
+			myCard
 		},
 		props: {
 			info: {

@@ -5,6 +5,8 @@
 			<login-in></login-in>
 		</div>
 		<div class="sl-content comWidth">
+			<highlight-work></highlight-work>
+			<!-- <my-pie></my-pie> -->
 			<my-collapse :max-height="420">
 				<Row :gutter="16">
 					<Col span="16">
@@ -30,6 +32,8 @@
 	import Dynamic from 'components/dynamic/dynamic'
 	import Community from 'components/community/community'
 	import myCollapse from 'base/my-collapse/my-collapse'
+	import myPie from 'base/my-echarts/my-pie'
+	import HighlightWork from 'components/highlight-work/highlight-work'
 	export default {
 		components: {
 			Carousel,
@@ -37,20 +41,23 @@
 			Department,
 			Dynamic,
 			Community,
-			myCollapse
+			myCollapse,
+			myPie,
+			HighlightWork
 		}
 	}
 </script>
 
 <style lang="scss">
-	.sl-banner {
-		position: relative;
+	.index {
+		.sl-banner {
+			position: relative;
+		}
+		.sl-content {
+			background-color: #fff;
+			border-radius: 6px;
+			margin-top: 12px;
+			padding: 14px;
+		}	
 	}
-	.sl-content {
-		background-color: #fff;
-		border-radius: 6px;
-		margin-top: 12px;
-		padding: 14px;
-	}
-	
 </style>

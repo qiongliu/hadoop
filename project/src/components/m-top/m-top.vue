@@ -1,17 +1,12 @@
 <template>
-	<div class="top">
-		<div class="clearfix">
+	<div class="my-top">
+		<Affix>
 			<my-nav :navList="navList">
 				<div class="sl-logo fl">
 					<img src="./logo-w.png" :alt="logoAlt">
 				</div>
 			</my-nav>
-			<!-- <ul class="nav fr">
-				<li v-for="(item,index) in navList" :key="index">
-					<router-link :to="item.href">{{item.name}}</router-link>
-				</li>
-			</ul> -->
-		</div>
+		</Affix>
 	</div>
 </template>
 
@@ -93,6 +88,9 @@
 
 <style lang="scss" scoped>
 	@import "../../common/css/variable";
+	.my-top {
+		height: 60px;
+	}
 	.sl-logo {
 		margin-right: 12px;
 		img {

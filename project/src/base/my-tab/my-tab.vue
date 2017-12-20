@@ -1,7 +1,7 @@
 <template>
 	<div class="tab-card">
 		<Tabs class="sl-title" value="activeTab">
-      <TabPane :label="label" name="activeTab" v-for="(item,index) in titleInfo" :key="index">
+      <TabPane :label="label" name="activeTab">
 				<slot></slot>
       </TabPane>
 	  </Tabs>
@@ -12,11 +12,11 @@
 	export default {
 		props: {
 			titleInfo: {
-				type: Array,
-				default: [{
+				type: Object,
+				default: {
 					name: '默认标题',
-					infoNum: 100
-				}]
+					description: ''
+				}
 			}
 		},
 		data () {
@@ -24,10 +24,10 @@
 			return {
 				label (h) {
 					return h('div',[
-						h('span',self.titleInfo[0].name),
+						h('span',self.titleInfo.name),
 						h('Tag',{
 							class: 'sl-title-tips'
-						},`${self.titleInfo[0].infoNum}`)
+						},self.titleInfo.description)
 					])
 				}
 			}

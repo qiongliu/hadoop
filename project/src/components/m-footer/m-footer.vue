@@ -1,19 +1,14 @@
 <template>
 	<div class="m-footer">
 		<p class="comWidth">footer</p>
-		<p class="comWidth">footer</p>
-		<p class="comWidth">footer</p>
-		<p class="comWidth">footer</p>
-		<p class="comWidth">footer</p>
-		<p class="comWidth">footer</p>
-		<p class="comWidth">footer</p>
-		<p class="comWidth">footer</p>
-		<p class="comWidth">footer</p>
 	</div>
 </template>
 
-<style scss="lang">
+<style lang="scss">
 	.m-footer {
-		background-color: #f00;
+			background-color: #2d8cf0;
+		p {
+			height: 160px;
+		}
 	}
 </style>
