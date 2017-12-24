@@ -33,12 +33,17 @@
 				</FormItem>
 			</Form>
 		</div>
+		<sign-up :isShow='isShow'></sign-up>
 	</div>
 </template>
 
 <script>
+	import signUp from 'components/sign-up/sign-up';
 
 	export default {
+		components: {
+			signUp
+		},
 		data () {
 			return {
 				login: {
@@ -67,7 +72,8 @@
 							trigger: 'blur'
 						}
 					]
-				}
+				},
+				isShow: false
 			}
 		},
 		methods: {
@@ -85,7 +91,7 @@
 				})
 			},
 			signUp () {
-				console.log('hehe')
+				this.isShow = true
 			}
 		}
 	}
