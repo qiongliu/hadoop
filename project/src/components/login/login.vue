@@ -33,7 +33,16 @@
 				</FormItem>
 			</Form>
 		</div>
-		<sign-up :isShow='isShow'></sign-up>
+		<Modal
+      v-model="showModal"
+      title="注册"
+      :mask-closable="false"
+      @on-ok="modalConfirm"
+      @on-cancel="modalCancel">
+      <p slot="header">用户注册</p>
+      <sign-up></sign-up>
+      <div slot="footer"></div>
+    </Modal>
 	</div>
 </template>
 
@@ -73,7 +82,7 @@
 						}
 					]
 				},
-				isShow: false
+				showModal: false
 			}
 		},
 		methods: {
@@ -91,7 +100,13 @@
 				})
 			},
 			signUp () {
-				this.isShow = true
+				this.showModal = true
+			},
+			modalConfirm () {
+
+			},
+			modalCancel () {
+
 			}
 		}
 	}

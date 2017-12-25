@@ -2,7 +2,7 @@
 	<div class="index">
 		<div class="sl-banner">
 			<carousel></carousel>
-			<login-in></login-in>
+			<login></login>
 		</div>
 		<div class="sl-content comWidth">
 			<highlight-work></highlight-work>
@@ -27,7 +27,7 @@
 
 <script>
 	import Carousel from 'components/carousel/carousel'
-	import LoginIn from 'components/login-in/login-in'
+	import Login from 'components/login/login'
 	import Department from 'components/department/department'
 	import Dynamic from 'components/dynamic/dynamic'
 	import Community from 'components/community/community'
@@ -37,7 +37,7 @@
 	export default {
 		components: {
 			Carousel,
-			LoginIn,
+			Login,
 			Department,
 			Dynamic,
 			Community,
