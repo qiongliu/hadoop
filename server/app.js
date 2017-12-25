@@ -1,14 +1,19 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var bodyParser = require('body-parser');
+const express = require('express');
+const path = require('path');
+const favicon = require('serve-favicon');
+const logger = require('morgan');
+const ejs = require('ejs');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 const session = require('express-session');
-var index = require('./routes/index');
-var users = require('./routes/users');
-let api = require('./routes/api');
 
-var app = express();
+
+let index = require('./routes/index');
+let users = require('./routes/users');
+let api = require('./routes/api');
+let config = require('./config');
+
+let app = express();
 
 app.set('port', process.env.PORT || 3000)
 // view engine setup
@@ -23,17 +28,17 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(session({
+// app.use(session({
 
-}));
+// }));
 
+app.use('/api',api);
 app.use('/', index);
 app.use('/users', users);
-app.use('/api',api);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
+  let err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
@@ -49,8 +54,8 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-app.listen(3000,(req,res) => {
-  console.log('app success!');
+app.listen(app.get("port"),() =>{
+  console.log('listen...');
 });
 
 module.exports = app;
