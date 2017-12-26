@@ -55,13 +55,15 @@ app.use(function(err, req, res, next) {
 });
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://' + config.host + ':' + config.port + '/' + config.db,{config:{autoIndex: false},useMongoClient:true});
+mongoose.connect('mongodb://' + config.mongoose.host + ':' + config.mongoose.port + '/' + config.mongoose.db,{useMongoClient: true,config:{autoIndex: false}});
 let db = mongoose.connection;
-con.on('error', console.error.bind(console, '连接数据库失败'));
+db.on('error', () => {
+  console.log("数据库连接失败！")
+});
 db.once('open',() => {
   console.log("数据库连接成功！")
   app.listen(app.get("port"),function(){
-    console.log('listen...');
+    console.log('app listen...');
   });
 });
 

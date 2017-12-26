@@ -4,3 +4,8 @@ exports.mongoose = {
 	db: 'hancheng',
 	cookieSecret: 'hancheng'
 }
+
+exports.code = {
+	ok: 0,
+	err: 1
+}

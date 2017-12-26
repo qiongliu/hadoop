@@ -23,8 +23,8 @@
           </FormItem>
         </Col>
         <Col span="12" >
-          <FormItem label="出生日期：" prop="date">
-            <DatePicker type="date" placeholder="请选择出生日期" v-model="signUp.date"></DatePicker>
+          <FormItem label="出生日期：" prop="birthDate">
+            <DatePicker type="date" placeholder="请选择出生日期" v-model="signUp.birthDate"></DatePicker>
           </FormItem>
         </Col>
       </Row>
@@ -53,6 +53,11 @@
       const belongCheck = (rule,val,cb) => {
         console.log(val);
       }
+      const usernameCheck = (rule,val,cb) => {
+        axios.get(`/api/usernamecheck?username=${val}`).then((result) => {
+          console.log(result);
+        })
+      }
       return {
         signUp: {
           username: '',
@@ -60,7 +65,7 @@
           password: '',
           repassword: '',
           gender: '',
-          date: ''
+          birthDate: ''
           // ,
           // belong: [
           //   {
@@ -109,7 +114,8 @@
         },
         rule: {
           username: [
-            {required: true, message: '用户名不能为空！',trigger: 'blur' }
+            {required: true, message: '用户名不能为空！',trigger: 'blur' },
+            {validator: usernameCheck, trigger: 'blur'}
           ],
           realname: [
             {required: true, message: '姓名不能为空！',trigger: 'blur' }
@@ -124,7 +130,7 @@
           gender: [
             {required: true, message: '性别不能为空！',trigger: 'change' }
           ],
-          date: [
+          birthDate: [
             {required: true, type: 'date', message: '出生日期不能为空！',trigger: 'change' }
           ]
           // ,
