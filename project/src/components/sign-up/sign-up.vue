@@ -140,7 +140,7 @@
         this.$refs.signUp.validate( (valid) => {
           if (valid) {
             axios.post('/api/signUp',{
-              haha: 'haha'
+              signUp: this.signUp
             })
             .then((result) => {
               console.log(result);

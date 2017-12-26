@@ -54,8 +54,15 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-app.listen(app.get("port"),() =>{
-  console.log('listen...');
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://' + config.host + ':' + config.port + '/' + config.db,{config:{autoIndex: false},useMongoClient:true});
+let db = mongoose.connection;
+con.on('error', console.error.bind(console, '连接数据库失败'));
+db.once('open',() => {
+  console.log("数据库连接成功！")
+  app.listen(app.get("port"),function(){
+    console.log('listen...');
+  });
 });
 
 module.exports = app;
