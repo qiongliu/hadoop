@@ -1,17 +1,17 @@
 <template>
-	<div class="login-wrap">
-		<div class="login-in">
-			<Form ref="login" :model="login" :rules="ruleValidate">
-				<FormItem prop="username">
+	<div class="sl-login-wrap">
+		<div class="login">
+			<Form ref="login" v-show="showLogin" :model="login">
+				<FormItem>
 					<Input class="text" v-model="login.username" type="text" placeholder="用户名/邮箱"></Input>
 				</FormItem>
-				<FormItem prop="password">
+				<FormItem>
 					<Input class="text" v-model="login.password" type="password" placeholder="密码"></Input>
 				</FormItem>
-				<FormItem class="tenday">
+				<FormItem class="auto-login">
 					<Row>
 						<Col span="10">
-							<CheckboxGroup v-model="login.tenday">
+							<CheckboxGroup v-model="login.autoLogin">
 								<Checkbox label="十天内免登录"></Checkbox>
 							</CheckboxGroup>
 						</Col>
@@ -24,7 +24,7 @@
 				<FormItem class="btn">
 					<Row :gutter="16">
 						<Col span="12">
-							<Button class="sign-in" type="primary" @click="signIn('login')">立即登录</Button>
+							<Button class="sign-in" type="primary" @click="signIn">登录</Button>
 						</Col>
 						<Col span="12">
 							<Button class="sign-up" type="primary" @click="signUp">注册</Button>
@@ -32,15 +32,16 @@
 					</Row>
 				</FormItem>
 			</Form>
+			<div class="login-info" v-show="!showLogin">
+				<h2>欢迎！</h2>
+				<Avatar shape="square" icon="person" size="large" />
+			</div>
 		</div>
 		<Modal
       v-model="showModal"
-      title="注册"
-      :mask-closable="false"
-      @on-ok="modalConfirm"
-      @on-cancel="modalCancel">
+      :mask-closable="false">
       <p slot="header">用户注册</p>
-      <sign-up></sign-up>
+      <sign-up @clickSignUp="clickSignUp"></sign-up>
       <div slot="footer"></div>
     </Modal>
 	</div>
@@ -58,55 +59,31 @@
 				login: {
 					username: '',
 					password: '',
-					tenday: []				
+					autoLogin: []				
 				},
-				ruleValidate: {
-					username: [
-						{
-							required: true,
-							message: '用户名不能为空！',
-							trigger: 'blur'
-						}
-					],
-					password: [
-						{
-							required: true,
-							message: '密码不能为空！',
-							trigger: 'blur'
-						},
-						{
-							type: 'string',
-							min: 6,
-							message: '密码长度不能小于6位！',
-							trigger: 'blur'
-						}
-					]
-				},
-				showModal: false
+				showModal: false,
+				showLogin: true
 			}
 		},
 		methods: {
-			signIn (name) {
-				this.$refs[name].validate( (valid) => {
-					this.$Message.config({
-						top: 300,
-						duration: 4
-					})
-					if (valid) {
-						this.$Message.success('登录成功！')
+			signIn () {
+				axios.post('/api/user/signIn',{
+					signInInfo: login
+				}).then((result) => {
+					if (result.data.code === 0) {
+						this.showLogin = false
 					} else {
-						this.$Message.error('登录失败！')
+						console.log('err')
 					}
 				})
 			},
 			signUp () {
-				this.showModal = true
+				this.showModal = !this.showModal
 			},
-			modalConfirm () {
-
-			},
-			modalCancel () {
-
+			clickSignUp (signUpInfo) {
+				this.showModal = false
+				this.showLogin = false
+				console.log(signUpInfo)
 			}
 		}
 	}
@@ -114,22 +91,22 @@
 
 <style lang="scss">
 	@import '../../common/css/variable.scss';
-	.login-wrap {
+	.sl-login-wrap {
 		width: 1000px;
- 		height: 400px;
+ 		height: 230px;
  		position: absolute;
  		top: 0;
  		left: 0;
  		right: 0;
  		margin: 0 auto;
-	}
-	.login-in {
-		position: absolute;
-		padding: 10px 30px; 
-		right: 0;
-		width: 330px;
-		height: 230px;
-		background-color: #fff;
+		.login {
+			position: absolute;
+			padding: 24px 30px; 
+			right: 0;
+			width: 330px;
+			height: 230px;
+			background-color: #fff;
+		}
 		.text {
 			input {
 				font-size: $fz-sm;
@@ -144,7 +121,7 @@
 				font-size: $fz-xs;
 			}
 		}
-		.tenday {
+		.auto-login {
 			margin-bottom: 6px;
 			span {
 				color: #555;
@@ -154,6 +131,9 @@
 			width: 100%;
 			height: 36px;
 			font-size: $fz-md-x;
+		}
+		.ivu-form-item {
+			margin-bottom: 10px;
 		}
 	}
 </style>

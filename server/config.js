@@ -9,3 +9,7 @@ exports.code = {
 	ok: 0,
 	err: 1
 }
+
+exports.passwordSalt = () => {
+	return 'hancheng';
+}

@@ -3,15 +3,16 @@ const path = require('path');
 const favicon = require('serve-favicon');
 const logger = require('morgan');
 const ejs = require('ejs');
+const Cookies = require('cookies');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const session = require('express-session');
 
 
 let index = require('./routes/index');
 let users = require('./routes/users');
 let api = require('./routes/api');
 let config = require('./config');
+let User = require('./models/User');
 
 let app = express();
 
@@ -28,13 +29,27 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// app.use(session({
-
-// }));
+app.use((req,res,next) => {
+  req.cookies = new Cookies(req,res);
+  req.userInfo = {};
+  let userInfo = req.cookies.get('HP_USERINFO');
+  if(userInfo) {
+    try {
+      req.userInfo = JSON.parse(userInfo);
+      User.findById(req.userInfo.id).then(function(result){
+        req.userInfo.role = result.role;
+        next();
+      });
+    } catch (e){
+      next();
+    }
+  } else {
+    next();
+  }
+});
 
 app.use('/api',api);
 app.use('/', index);
-app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -62,9 +77,9 @@ db.on('error', () => {
 });
 db.once('open',() => {
   console.log("数据库连接成功！")
-  app.listen(app.get("port"),function(){
-    console.log('app listen...');
-  });
+});
+app.listen(app.get("port"),function(){
+  console.log('app listen...');
 });
 
 module.exports = app;

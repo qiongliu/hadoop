@@ -7,11 +7,14 @@ let userSchema = new Schema({
 	password: String,
 	gender: String,
 	birthDate: Date,
-	// role: {
-	// 	type: Schema.Types.ObjectId,
-	// 	ref: 'Role',
-	// 	default: 0
-	// },
+	role: {
+		type: Number,
+		default: 0
+	},
+	isAutoLogin: {
+		type: Boolean,
+		default: false
+	},
 	date: {
 		type: Date,
 		default: Date.now()

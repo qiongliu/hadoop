@@ -54,8 +54,13 @@
         console.log(val);
       }
       const usernameCheck = (rule,val,cb) => {
-        axios.get(`/api/usernamecheck?username=${val}`).then((result) => {
-          console.log(result);
+        axios.get(`/api/user/check?username=${val}`).then((result) => {
+          console.log(result.data)
+          if (result.data.code === 1) {
+            cb(new Error('用户名已经被注册！'))
+          } else {
+            cb()
+          }
         })
       }
       return {
@@ -145,11 +150,12 @@
       submit () {
         this.$refs.signUp.validate( (valid) => {
           if (valid) {
-            axios.post('/api/signUp',{
-              signUp: this.signUp
-            })
-            .then((result) => {
-              console.log(result);
+            axios.post('/api/user/signUp',{
+              signUpInfo: this.signUp
+            }).then((result) => {
+              if (result.data.code === 0) {
+                this.$emit('clickSignUp',result)
+              }
             })
           } else {
             console.log('err')
