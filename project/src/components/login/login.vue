@@ -2,12 +2,18 @@
 	<div class="sl-login-wrap">
 		<div class="login">
 			<Form ref="login" v-show="showLogin" :model="login">
-				<FormItem>
-					<Input class="text" v-model="login.username" type="text" placeholder="用户名/邮箱"></Input>
-				</FormItem>
-				<FormItem>
-					<Input class="text" v-model="login.password" type="password" placeholder="密码"></Input>
-				</FormItem>
+				<Poptip v-model='popUsername' placement="top-start">
+					<div slot="content">用户名不能为空！</div>
+					<FormItem>
+						<Input class="text" v-model="login.username" type="text" placeholder="用户名/邮箱"></Input>
+					</FormItem>
+				</Poptip>
+				<Poptip v-model='popPassword' placement="top-start">
+					<div slot="content">密码不能为空！</div>
+					<FormItem>
+						<Input class="text" v-model="login.password" type="password" placeholder="密码"></Input>
+					</FormItem>
+				</Poptip>
 				<FormItem class="auto-login">
 					<Row>
 						<Col span="10">
@@ -32,9 +38,18 @@
 					</Row>
 				</FormItem>
 			</Form>
-			<div class="login-info" v-show="!showLogin">
-				<h2>欢迎！</h2>
-				<Avatar shape="square" icon="person" size="large" />
+			<div class="sl-login-info" v-show="!showLogin">
+				<h2>欢迎，您真是个工作狂！</h2>
+				<Row>
+					<Col span="12">
+					 <Badge count="1">
+						<Avatar shape="square" icon="person" size="large" />
+	       	 </Badge>
+					</Col>
+					<Col span="12">
+		        <p><span>{{this.login.username}}</span>查看信息</p>
+					</Col>
+				</Row>
 			</div>
 		</div>
 		<Modal
@@ -48,7 +63,8 @@
 </template>
 
 <script>
-	import signUp from 'components/sign-up/sign-up';
+	import axios from 'axios'
+	import signUp from 'components/sign-up/sign-up'
 
 	export default {
 		components: {
@@ -62,13 +78,22 @@
 					autoLogin: []				
 				},
 				showModal: false,
-				showLogin: true
+				showLogin: true,
+				popUsername: false,
+				popPassword: false
 			}
 		},
 		methods: {
 			signIn () {
+				if (this.login.username === '') {
+					return this.popUsername = true
+				}
+				if (this.login.password === '') {
+					return this.popPassword = true
+				}
+				
 				axios.post('/api/user/signIn',{
-					signInInfo: login
+					signInInfo: this.login
 				}).then((result) => {
 					if (result.data.code === 0) {
 						this.showLogin = false
@@ -134,6 +159,18 @@
 		}
 		.ivu-form-item {
 			margin-bottom: 10px;
+		}
+	}
+	.ivu-poptip-inner {
+		background-color: #ed3f14;
+		color: #fff;
+	}
+	.ivu-poptip-arrow:after {
+		border-top-color: #ed3f14 !important; 
+	}
+	.sl-login-info {
+		h2 {
+			margin-bottom: 16px;
 		}
 	}
 </style>

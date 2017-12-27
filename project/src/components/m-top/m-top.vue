@@ -37,7 +37,7 @@
 					},
 					{
 						id: 1,
-						name: '本周动态',
+						name: '汉城动态',
 						url: ''
 					},
 					{
@@ -66,16 +66,6 @@
 								url: ''
 							}
 						]
-					},
-					{
-						id: 5,
-						name: '政策解读',
-						url: ''
-					},
-					{
-						id: 6,
-						name: '汉城简介',
-						url: ''
 					}
 				]
 				// axios.get('/navList').then((res) => {

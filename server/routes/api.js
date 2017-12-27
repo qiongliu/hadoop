@@ -31,7 +31,6 @@ router.post('/user/signUp',(req,res,next) => {
 	let md5 = crypto.createHash('md5');
 	signUpInfo.password = md5.update(signUpInfo.password + passwordSalt).digest('hex');
 	new User(signUpInfo).save().then((userInfo) => {
-		console.log(typeof userInfo.username)
 		req.cookies.set('HP_USERINFO',JSON.stringify({
 			id: userInfo._id
 		}));
@@ -53,14 +52,14 @@ router.post('/user/signIn',(req,res) => {
 	}).then((result) => {
 		if (result) {
 			req.cookies.set('HP_USERINFO',JSON.stringify({
-				id: data._id
+				id: result._id
 			}));
 			resData.message = '登录成功！';
-			res.json(resData);
 		} else {
 			resData.code = code.err,
 			resData.message = '用户名或密码错误！';
 		}
+		res.json(resData);
 	});
 });
 
