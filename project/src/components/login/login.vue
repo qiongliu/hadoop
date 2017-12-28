@@ -77,6 +77,13 @@
 				// console.log(result.data)
 			})
 		},
+		mounted () {
+			let role = this.$store.getters.getRole
+			console.log(role)
+			if (role >=0) {
+				this.showLogin = false
+			}
+		},
 		data () {
 			return {
 				login: {

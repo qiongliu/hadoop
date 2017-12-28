@@ -21,7 +21,8 @@
     },
     created () {
       axios.get('/api/autoLogin').then((result) => {
-        console.log(result.data)
+        console.log(result.data.roleType)
+        this.$store.commit('setRole', result.data.roleType)
       })
     }
   }

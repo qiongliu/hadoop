@@ -17,8 +17,15 @@ router.use((res,req,next) => {
 });
 
 router.get('/autoLogin',(req,res) => {
-
-	res.json(req.userInfo.role);
+	let roleType = req.userInfo.roleType;
+	if (roleType >= 0) {
+		resData.message = '用户已登录';
+		resData.roleType = roleType;
+	} else {
+		resData.code = 1;
+		resData.message = '用户未登录';
+	}
+	res.json(resData);
 });
 
 router.get('/user/check',(req,res) => {
@@ -43,7 +50,7 @@ router.post('/user/signUp',(req,res,next) => {
 	}).then((userInfo) => {
 		req.cookies.set('HP_USERINFO',JSON.stringify({
 			id: userInfo._id
-		}));
+		}),{maxAge: 1000 * 60 * 60 * 24 * 30});
 		resData.code = code.ok;
 		resData.message = "注册成功！";
 		res.json(resData);
