@@ -3,10 +3,7 @@ const Schema = mongoose.Schema;
 
 let roleSchema = new Schema({
 	name: String,
-	permission: {
-		type: Schema.Types.ObjectId,
-		ref: 'Permission'
-	}
+	type: Number
 });
 
-let Role = mongoose.model("Role",roleSchema);
+module.exports = mongoose.model('Role',roleSchema);

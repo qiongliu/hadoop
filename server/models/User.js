@@ -8,8 +8,8 @@ let userSchema = new Schema({
 	gender: String,
 	birthDate: Date,
 	role: {
-		type: Number,
-		default: 0
+		type: Schema.Types.ObjectId,
+		ref: 'Role'
 	},
 	isAutoLogin: {
 		type: Boolean,

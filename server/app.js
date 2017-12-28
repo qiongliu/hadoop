@@ -36,8 +36,10 @@ app.use((req,res,next) => {
   if(userInfo) {
     try {
       req.userInfo = JSON.parse(userInfo);
-      User.findById(req.userInfo.id).then(function(result){
-        req.userInfo.role = result.role;
+      User.findById(req.userInfo.id).populate('role').then(function(result){
+        console.log(result);
+        req.userInfo.roleType = result.role.type;
+        req.userInfo.role = result.role.name;
         next();
       });
     } catch (e){

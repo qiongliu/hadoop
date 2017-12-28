@@ -9,6 +9,7 @@
 </template>
 
 <script>
+  import axios from 'axios'
 	import mTop from 'components/m-top/m-top'
 	import mCarousel from 'components/carousel/carousel'
   import mFooter from 'components/m-footer/m-footer'
@@ -17,6 +18,11 @@
     	mTop,
     	mCarousel,
       mFooter
+    },
+    created () {
+      axios.get('/api/autoLogin').then((result) => {
+        console.log(result.data)
+      })
     }
   }
 </script>

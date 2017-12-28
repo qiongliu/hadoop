@@ -2,18 +2,16 @@
 	<div class="sl-login-wrap">
 		<div class="login">
 			<Form ref="login" v-show="showLogin" :model="login">
-				<Poptip v-model='popUsername' placement="top-start">
-					<div slot="content">用户名不能为空！</div>
+				<my-tips :content="usernameTipsContent" :isShow="usernameTips">
 					<FormItem>
-						<Input class="text" v-model="login.username" type="text" placeholder="用户名/邮箱"></Input>
+						<Input class="text" ref="username" v-model="login.username" type="text" @on-focus="usernameFocus" placeholder="用户名/邮箱"></Input>
 					</FormItem>
-				</Poptip>
-				<Poptip v-model='popPassword' placement="top-start">
-					<div slot="content">密码不能为空！</div>
+				</my-tips>
+				<my-tips content="密码不能为空！" :isShow="passwordTips">
 					<FormItem>
-						<Input class="text" v-model="login.password" type="password" placeholder="密码"></Input>
+						<Input class="text" ref="password" v-model="login.password" type="password" @on-focus="passwordFocus" placeholder="密码"></Input>
 					</FormItem>
-				</Poptip>
+				</my-tips>
 				<FormItem class="auto-login">
 					<Row>
 						<Col span="10">
@@ -39,15 +37,17 @@
 				</FormItem>
 			</Form>
 			<div class="sl-login-info" v-show="!showLogin">
-				<h2>欢迎，您真是个工作狂！</h2>
+				<h2>欢迎{{this.login.username}}，您真是个工作狂！</h2>
 				<Row>
 					<Col span="12">
 					 <Badge count="1">
 						<Avatar shape="square" icon="person" size="large" />
-	       	 </Badge>
+	       	 </Badge><span>你有3条站内信，请点击查看</span>
 					</Col>
 					<Col span="12">
-		        <p><span>{{this.login.username}}</span>查看信息</p>
+		        <p></p>
+		        <span>完善个人资料</span>
+		        <span>退出</span>
 					</Col>
 				</Row>
 			</div>
@@ -65,10 +65,17 @@
 <script>
 	import axios from 'axios'
 	import signUp from 'components/sign-up/sign-up'
+	import myTips from 'base/my-tips/my-tips'
 
 	export default {
 		components: {
-			signUp
+			signUp,
+			myTips
+		},
+		created () {
+			axios.get('http://wthrcdn.etouch.cn/weather_mini?city=西安').then((result) => {
+				// console.log(result.data)
+			})
 		},
 		data () {
 			return {
@@ -79,26 +86,33 @@
 				},
 				showModal: false,
 				showLogin: true,
-				popUsername: false,
-				popPassword: false
+				usernameTipsContent: '用户名不能为空！',
+				usernameTips: false,
+				passwordTips: false,
+				weather: {}
 			}
 		},
 		methods: {
 			signIn () {
 				if (this.login.username === '') {
-					return this.popUsername = true
+					this.$refs.username.focus()
+					this.usernameTips = !this.usernameTips
+					return
 				}
 				if (this.login.password === '') {
-					return this.popPassword = true
+					this.$refs.password.focus()
+					this.passwordTips = !this.passwordTips
+					return
 				}
-				
+
 				axios.post('/api/user/signIn',{
 					signInInfo: this.login
 				}).then((result) => {
 					if (result.data.code === 0) {
 						this.showLogin = false
 					} else {
-						console.log('err')
+						this.usernameTipsContent = result.data.message
+						this.usernameTips = !this.usernameTips
 					}
 				})
 			},
@@ -108,7 +122,12 @@
 			clickSignUp (signUpInfo) {
 				this.showModal = false
 				this.showLogin = false
-				console.log(signUpInfo)
+			},
+			usernameFocus () {
+				// this.usernameTips = false
+			},
+			passwordFocus () {
+				// this.passwordTips = false
 			}
 		}
 	}

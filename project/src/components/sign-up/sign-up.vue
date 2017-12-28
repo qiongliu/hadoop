@@ -55,7 +55,6 @@
       }
       const usernameCheck = (rule,val,cb) => {
         axios.get(`/api/user/check?username=${val}`).then((result) => {
-          console.log(result.data)
           if (result.data.code === 1) {
             cb(new Error('用户名已经被注册！'))
           } else {

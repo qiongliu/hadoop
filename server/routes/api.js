@@ -2,6 +2,7 @@ const crypto = require('crypto');
 const express = require('express');
 const router = express.Router();
 let User = require('../models/User');
+let Role = require('../models/Role');
 let code = require('../config').code;
 let passwordSalt = require('../config').passwordSalt;
 
@@ -13,6 +14,11 @@ router.use((res,req,next) => {
 		message: ''
 	};
 	next();
+});
+
+router.get('/autoLogin',(req,res) => {
+
+	res.json(req.userInfo.role);
 });
 
 router.get('/user/check',(req,res) => {
@@ -30,15 +36,20 @@ router.post('/user/signUp',(req,res,next) => {
 	let signUpInfo = req.body.signUpInfo;
 	let md5 = crypto.createHash('md5');
 	signUpInfo.password = md5.update(signUpInfo.password + passwordSalt).digest('hex');
-	new User(signUpInfo).save().then((userInfo) => {
+	Role.findOne({name: '群众'}).then((roleInfo) => {
+		signUpInfo.role = roleInfo._id;
+		let user = new User(signUpInfo);
+		return user.save();
+	}).then((userInfo) => {
 		req.cookies.set('HP_USERINFO',JSON.stringify({
 			id: userInfo._id
 		}));
 		resData.code = code.ok;
 		resData.message = "注册成功！";
 		res.json(resData);
-	}).catch((err) => {
-		console.log('haha')
+	})
+	.catch((err) => {
+		console.log(err)
 	});
 });
 
