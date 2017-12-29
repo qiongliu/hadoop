@@ -87,6 +87,9 @@
 			vertical-align: middle;
 		}
 	}
+	.ivu-affix {
+    z-index: 11;
+	}
 </style>
 
 

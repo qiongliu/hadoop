@@ -1,22 +1,22 @@
 <template>
 	<div class="sl-login-wrap">
 		<div class="login">
-			<Form ref="login" v-show="showLogin" :model="login">
+			<Form ref="login" v-if="!showLogin" :model="login">
 				<my-tips :content="usernameTipsContent" :isShow="usernameTips">
 					<FormItem>
-						<Input class="text" ref="username" v-model="login.username" type="text" @on-focus="usernameFocus" placeholder="用户名/邮箱"></Input>
+						<Input class="text" ref="username" v-model="login.username" type="text" placeholder="用户名/邮箱"></Input>
 					</FormItem>
 				</my-tips>
 				<my-tips content="密码不能为空！" :isShow="passwordTips">
 					<FormItem>
-						<Input class="text" ref="password" v-model="login.password" type="password" @on-focus="passwordFocus" placeholder="密码"></Input>
+						<Input class="text" ref="password" v-model="login.password" type="password" placeholder="密码"></Input>
 					</FormItem>
 				</my-tips>
 				<FormItem class="auto-login">
 					<Row>
 						<Col span="10">
 							<CheckboxGroup v-model="login.autoLogin">
-								<Checkbox label="十天内免登录"></Checkbox>
+								<Checkbox label="1">十天内免登录</Checkbox>
 							</CheckboxGroup>
 						</Col>
 						<Col class="help" span="14">
@@ -36,27 +36,44 @@
 					</Row>
 				</FormItem>
 			</Form>
-			<div class="sl-login-info" v-show="!showLogin">
-				<h2>欢迎{{this.login.username}}，您真是个工作狂！</h2>
-				<Row>
-					<Col span="12">
-					 <Badge count="1">
+			<div class="sl-login-info" v-if="showLogin">
+				<Poptip trigger="hover" class="sl-weather" placement="top">
+					<p class="sl-weather-tips">{{weather.tips}}</p>
+	        <div slot="title"><span>{{weather.type}}</span><span>aqi:{{weather.aqi}}</span></div>
+	        <div slot="content">
+	           <span>{{weather.high}}</span><span>{{weather.low}}</span>
+	        </div>
+		    </Poptip>
+		     <!-- <span class="sl-realname">{{realname}},</span> -->
+				<div class="clearfix">
+					<Badge count="1" class="sl-badge fl">
 						<Avatar shape="square" icon="person" size="large" />
-	       	 </Badge><span>你有3条站内信，请点击查看</span>
-					</Col>
-					<Col span="12">
-		        <p></p>
-		        <span>完善个人资料</span>
-		        <span>退出</span>
-					</Col>
-				</Row>
+	       	</Badge>
+	       	<div class="fl">
+	       	 	<p class="sl-letter">您有新信息，请及时<a href="javascript:;">查看</a></p>
+		       	<div class="sl-userinfo">
+			       	<a href="javascript:;" class="">完善个人资料</a><span class="">我的空间</span><span class="sl-sign-out" @click="signOut">退出</span>
+		       	</div>
+	       	</div>
+       	</div>
+				<div class="sl-concern">
+					<span>我的关注：</span>
+					<div>
+						<Tag color="blue">本周动态</Tag>
+						<Tag color="blue">科室指标</Tag>
+						<Tag color="blue">青东社区</Tag>
+						<Tag color="blue">庞马村</Tag>
+						<Tag color="blue">业务办理</Tag>
+						<Button icon="ios-plus-empty" type="dashed" size="small" @click="addConcern">修改关注</Button>
+					</div>
+				</div>
 			</div>
 		</div>
 		<Modal
       v-model="showModal"
       :mask-closable="false">
       <p slot="header">用户注册</p>
-      <sign-up @clickSignUp="clickSignUp"></sign-up>
+      <sign-up @confirmSignUp="confirmSignUp"></sign-up>
       <div slot="footer"></div>
     </Modal>
 	</div>
@@ -72,17 +89,28 @@
 			signUp,
 			myTips
 		},
+		computed: {
+			showLogin: {
+				get () {
+					return Boolean(this.$store.getters.role)
+				}
+			} 
+		},
 		created () {
 			axios.get('http://wthrcdn.etouch.cn/weather_mini?city=西安').then((result) => {
-				// console.log(result.data)
+				let forecast = result.data.data.forecast[0]
+				this.weather = {
+					tips: '今天天气还不错，努力工作吧！',
+					aqi: result.data.data.aqi,
+					high: forecast.high,
+					low: forecast.low,
+					type: forecast.type
+				}
 			})
-		},
-		mounted () {
-			let role = this.$store.getters.getRole
-			console.log(role)
-			if (role >=0) {
-				this.showLogin = false
-			}
+			axios.get('/api/autoLogin').then((userInfo) => {
+        this.$store.commit('role', userInfo.data.roleType)
+				this.realname = userInfo.data.realname
+      })
 		},
 		data () {
 			return {
@@ -91,22 +119,22 @@
 					password: '',
 					autoLogin: []				
 				},
+				realname: '',
+				weather: {},
 				showModal: false,
-				showLogin: true,
 				usernameTipsContent: '用户名不能为空！',
 				usernameTips: false,
 				passwordTips: false,
-				weather: {}
 			}
 		},
 		methods: {
 			signIn () {
-				if (this.login.username === '') {
+				if (!this.login.username) {
 					this.$refs.username.focus()
 					this.usernameTips = !this.usernameTips
 					return
 				}
-				if (this.login.password === '') {
+				if (!this.login.password) {
 					this.$refs.password.focus()
 					this.passwordTips = !this.passwordTips
 					return
@@ -114,11 +142,12 @@
 
 				axios.post('/api/user/signIn',{
 					signInInfo: this.login
-				}).then((result) => {
-					if (result.data.code === 0) {
-						this.showLogin = false
+				}).then((userInfo) => {
+					if (userInfo.data.code === 0) {
+						this.$store.commit('role',userInfo.data.roleType)
+						this.realname = userInfo.data.realname
 					} else {
-						this.usernameTipsContent = result.data.message
+						this.usernameTipsContent = userInfo.data.message
 						this.usernameTips = !this.usernameTips
 					}
 				})
@@ -126,15 +155,23 @@
 			signUp () {
 				this.showModal = !this.showModal
 			},
-			clickSignUp (signUpInfo) {
+			signOut () {
+				axios.get('/api/user/signOut').then((result) => {
+					if (result.data.code === 0) {
+						this.$store.commit('role', 0);
+					}
+				})
+			},
+			confirmSignUp (userInfo) {
 				this.showModal = false
-				this.showLogin = false
+				this.realname = userInfo.realname
+				this.$store.commit('role',userInfo.roleType)
 			},
-			usernameFocus () {
-				// this.usernameTips = false
+			addConcern () {
+
 			},
-			passwordFocus () {
-				// this.passwordTips = false
+			deleteConcern () {
+
 			}
 		}
 	}
@@ -187,16 +224,41 @@
 			margin-bottom: 10px;
 		}
 	}
-	.ivu-poptip-inner {
-		background-color: #ed3f14;
-		color: #fff;
-	}
-	.ivu-poptip-arrow:after {
-		border-top-color: #ed3f14 !important; 
-	}
 	.sl-login-info {
 		h2 {
 			margin-bottom: 16px;
 		}
+	}
+	.sl-weather {
+		span {
+			padding: 0 10px;
+		}
+	}
+	.sl-weather-tips {
+		font-size: 16px;
+		font-weight: 600;
+		margin-bottom: 10px;
+		color: $c-main;
+		cursor: pointer;
+	}
+	.sl-badge {
+		margin-right: 16px;
+	}
+	.sl-letter {
+		font-size: $fz-sm;
+	}
+	.sl-userinfo {
+		span {
+			margin: 0 12px;
+		}
+	}
+	.sl-sign-out {
+		cursor: pointer;
+	}
+	.sl-concern {
+		margin-top: 10px;
+	}
+	.ivu-badge-count {
+		z-index: 9;
 	}
 </style>

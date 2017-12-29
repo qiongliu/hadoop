@@ -31,14 +31,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use((req,res,next) => {
   req.cookies = new Cookies(req,res);
-  req.userInfo = {};
   let userInfo = req.cookies.get('HP_USERINFO');
+  req.userInfo = {};
   if(userInfo) {
     try {
-      req.userInfo = JSON.parse(userInfo);
+      req.userInfo.id = userInfo;
       User.findById(req.userInfo.id).populate('role').then(function(result){
         req.userInfo.roleType = result.role.type;
-        req.userInfo.role = result.role.name;
+        req.userInfo.realname = result.realname;
         next();
       });
     } catch (e){

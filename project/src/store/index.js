@@ -5,15 +5,15 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
 	state: {
-		role: -1
+		role: 0
 	},
 	getters: {
-		getRole (state) {
+		role (state) {
 			return state.role
 		}
 	},
 	mutations: {
-		setRole (state, r) {
+		role (state, r) {
 			state.role = r
 		}
 	}

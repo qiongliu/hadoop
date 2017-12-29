@@ -18,20 +18,22 @@ router.use((res,req,next) => {
 
 router.get('/autoLogin',(req,res) => {
 	let roleType = req.userInfo.roleType;
-	if (roleType >= 0) {
+	if (roleType) {
 		resData.message = '用户已登录';
 		resData.roleType = roleType;
+		resData.realname = req.userInfo.realname;
 	} else {
-		resData.code = 1;
+		resData.code = code.ok;
 		resData.message = '用户未登录';
+		resData.roleType = 0;
 	}
 	res.json(resData);
 });
 
 router.get('/user/check',(req,res) => {
 	let username = req.query.username;
-	User.findOne({username:username}).then((result) => {
-		if (result) {
+	User.findOne({username:username}).then((userInfo) => {
+		if (userInfo) {
 			resData.code = code.err;
 			resData.message = '用户名已经被注册！';
 		} 
@@ -43,16 +45,16 @@ router.post('/user/signUp',(req,res,next) => {
 	let signUpInfo = req.body.signUpInfo;
 	let md5 = crypto.createHash('md5');
 	signUpInfo.password = md5.update(signUpInfo.password + passwordSalt).digest('hex');
-	Role.findOne({name: '群众'}).then((roleInfo) => {
+	Role.findOne({type: 1}).then((roleInfo) => {
 		signUpInfo.role = roleInfo._id;
 		let user = new User(signUpInfo);
 		return user.save();
 	}).then((userInfo) => {
-		req.cookies.set('HP_USERINFO',JSON.stringify({
-			id: userInfo._id
-		}),{maxAge: 1000 * 60 * 60 * 24 * 30});
+		req.cookies.set('HP_USERINFO',userInfo._id);
 		resData.code = code.ok;
 		resData.message = "注册成功！";
+		resData.roleType = 1;
+		resData.realname = userInfo.realname;
 		res.json(resData);
 	})
 	.catch((err) => {
@@ -67,18 +69,31 @@ router.post('/user/signIn',(req,res) => {
 	User.findOne({
 		username: signInInfo.username,
 		password: signInInfo.password
-	}).then((result) => {
-		if (result) {
-			req.cookies.set('HP_USERINFO',JSON.stringify({
-				id: result._id
-			}));
+	}).populate('role').then((userInfo) => {
+		if (userInfo) {
+			let autoLoginTime = parseInt(signInInfo.autoLogin[0]) * 10;
+			req.cookies.set('HP_USERINFO',userInfo._id,{maxAge: 1000 * 60 * 60 * 24 * autoLoginTime});
 			resData.message = '登录成功！';
+			resData.roleType = userInfo.role.type;
+			resData.realname = userInfo.realname;
 		} else {
 			resData.code = code.err,
 			resData.message = '用户名或密码错误！';
 		}
 		res.json(resData);
 	});
+});
+
+router.get('/user/signOut',(req,res) => {
+	let userid = req.cookies.get('HP_USERINFO');
+	if (userid) {
+		req.cookies.set('HP_USERINFO','');
+		resData.message = '退出成功！';
+	} else {
+		resData.code = code.err;
+		resData.message = '退出失败！';
+	}
+	res.json(resData);
 });
 
 module.exports = router;

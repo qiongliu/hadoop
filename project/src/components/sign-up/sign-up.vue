@@ -151,13 +151,14 @@
           if (valid) {
             axios.post('/api/user/signUp',{
               signUpInfo: this.signUp
-            }).then((result) => {
-              if (result.data.code === 0) {
-                this.$emit('clickSignUp',result)
+            }).then((userInfo) => {
+              if (userInfo.data.code === 0) {
+                userInfo.data.username = this.signUp.username
+                this.$emit('confirmSignUp',userInfo.data)
               }
             })
           } else {
-            console.log('err')
+            // console.log('注册信息填写有误！')
           }
         })
       },
