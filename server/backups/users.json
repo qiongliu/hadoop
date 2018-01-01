@@ -1,0 +1,12 @@
+{ 
+    "_id" : ObjectId("5a463ed0976e94256040b481"), 
+    "username" : "电路分析", 
+    "realname" : "林一", 
+    "password" : "055139bb4e430b5d51f7cf97b7dd4c43", 
+    "gender" : "男", 
+    "birthDate" : ISODate("2010-05-10T16:00:00.000+0000"), 
+    "role" : ObjectId("5a459ac27facd310f554936d"), 
+    "date" : ISODate("2017-12-29T13:08:49.776+0000"), 
+    "isAutoLogin" : false, 
+    "__v" : NumberInt(0)
+}

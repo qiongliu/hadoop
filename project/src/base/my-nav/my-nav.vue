@@ -4,7 +4,7 @@
             <div class="comWidth">
                 <slot></slot> 
                 <template v-for="item in navList">
-                    <MenuItem class="sl-item" :name="item.id" v-if="!item.sub">
+                    <MenuItem class="sl-item" :name="item.id" v-if="!item.sub" :url="item.url">
                         {{item.name}}
                     </MenuItem>
                     <Submenu class="sl-item" :name="item.id" v-if="item.sub">
@@ -35,6 +35,7 @@
         methods: {
             clickNav (name) {
                 this.activeIndex = name
+                this.$router.push(this.navList[this.activeIndex].url)
             }
         }
     }

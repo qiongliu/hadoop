@@ -1,8 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Index from 'components/index'
-import News from 'components/news/news'
-import newsDetail from 'components/news-detail/news-detail'
+import DynamicList from 'components/dynamic-list/dynamic-list'
+import DynamicDetail from 'components/dynamic-detail/dynamic-detail'
+import DynamicWrite from 'components/dynamic-write/dynamic-write'
+import Information from 'components/Information/Information'
 
 Vue.use(Router)
 
@@ -18,14 +20,23 @@ export default new Router ({
 			component: Index
 		},
 		{
-			path: '/news',
-			component: News,
+			path: '/dynamicList',
+			component: DynamicList,
 			children: [
-			 {
-			 	path: ':id',
-			 	component: newsDetail
-			 }
+				{
+					path: ':id',
+					component: DynamicDetail
+				}
 			]
+		},
+		{
+			path: '/dynamicWrite',
+			component: DynamicWrite
+		},
+		{
+			path: '/information',
+			component: Information,
+			name: 'information'
 		}
 	]
 })

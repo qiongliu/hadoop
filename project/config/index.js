@@ -13,6 +13,12 @@ module.exports = {
     proxyTable: {
         "/api": {
             target: 'http://localhost:3000/'
+        },
+        "/article": {
+            target: 'http://localhost:3000/'
+        },
+        "/upload": {
+            target: 'http://localhost:3000/'
         }
     },
 

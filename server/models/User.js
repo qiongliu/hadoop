@@ -15,6 +15,10 @@ let userSchema = new Schema({
 		type: Boolean,
 		default: false
 	},
+	belong: {
+		type: Schema.Types.ObjectId,
+		ref: 'Belong'
+	},
 	date: {
 		type: Date,
 		default: Date.now()

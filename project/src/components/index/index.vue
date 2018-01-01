@@ -1,33 +1,24 @@
 <template>
 	<div class="index">
-		<div class="sl-banner">
-			<carousel></carousel>
-			<login></login>
-		</div>
-		<div class="sl-content comWidth">
-			<highlight-work></highlight-work>
-			<!-- <my-pie></my-pie> -->
-			<my-collapse :max-height="420">
-				<Row :gutter="16">
-					<Col span="16">
-						<department></department>
-					</Col>
-					<Col span="8">
-						<dynamic></dynamic>
-					</Col>
-				</Row>
-			</my-collapse>
-			<my-collapse :max-height="510">
-				<community></community>
-			</my-collapse>
-		</div>
+		<highlight-work></highlight-work>
+		<my-collapse :max-height="420">
+			<Row :gutter="16">
+				<Col span="16">
+					<department></department>
+				</Col>
+				<Col span="8">
+					<dynamic></dynamic>
+				</Col>
+			</Row>
+		</my-collapse>
+		<my-collapse :max-height="510">
+			<community></community>
+		</my-collapse>
 		<BackTop></BackTop>
 	</div>
 </template>
 
 <script>
-	import Carousel from 'components/carousel/carousel'
-	import Login from 'components/login/login'
 	import Department from 'components/department/department'
 	import Dynamic from 'components/dynamic/dynamic'
 	import Community from 'components/community/community'
@@ -36,8 +27,6 @@
 	import HighlightWork from 'components/highlight-work/highlight-work'
 	export default {
 		components: {
-			Carousel,
-			Login,
 			Department,
 			Dynamic,
 			Community,
@@ -47,17 +36,3 @@
 		}
 	}
 </script>
-
-<style lang="scss">
-	.index {
-		.sl-banner {
-			position: relative;
-		}
-		.sl-content {
-			background-color: #fff;
-			border-radius: 6px;
-			margin-top: 12px;
-			padding: 14px;
-		}	
-	}
-</style>

@@ -33,12 +33,12 @@
 					{
 						id: 0,
 						name: '首页',
-						url: 'index'
+						url: '/index'
 					},
 					{
 						id: 1,
 						name: '汉城动态',
-						url: ''
+						url: '/dynamicList'
 					},
 					{
 						id: 2,

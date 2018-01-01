@@ -3,6 +3,8 @@ const express = require('express');
 const router = express.Router();
 let User = require('../models/User');
 let Role = require('../models/Role');
+let Belong = require('../models/Belong');
+let Framework = require('../models/Framework');
 let code = require('../config').code;
 let passwordSalt = require('../config').passwordSalt;
 
@@ -94,6 +96,19 @@ router.get('/user/signOut',(req,res) => {
 		resData.message = '退出失败！';
 	}
 	res.json(resData);
+});
+
+router.get('/user/belong',(req,res) => {
+	Belong.find({}).populate('type').then((belongList) => {
+		if (belongList) {
+			resData.message = '属于数据请求成功！';
+			resData.belongList = belongList;
+		} else {
+			resData.code = code.err;
+			resData.message = '属于数据请求失败！';
+		}
+		res.json(resData);
+	});
 });
 
 module.exports = router;

@@ -1,0 +1,35 @@
+{ 
+    "_id" : ObjectId("5a4651cc73da5f2e899ff738"), 
+    "name" : "青东社区", 
+    "type" : ObjectId("5a4747867b44adb13e26aa06")
+}
+{ 
+    "_id" : ObjectId("5a4651cc73da5f2e899ff739"), 
+    "name" : "长乐西苑社区", 
+    "type" : ObjectId("5a4747867b44adb13e26aa06")
+}
+{ 
+    "_id" : ObjectId("5a4651cc73da5f2e899ff73a"), 
+    "name" : "北李社区", 
+    "type" : ObjectId("5a4747867b44adb13e26aa06")
+}
+{ 
+    "_id" : ObjectId("5a4651cc73da5f2e899ff73b"), 
+    "name" : "海红社区", 
+    "type" : ObjectId("5a4747867b44adb13e26aa06")
+}
+{ 
+    "_id" : ObjectId("5a4651cc73da5f2e899ff73c"), 
+    "name" : "东扬善村", 
+    "type" : ObjectId("5a4747867b44adb13e26aa05")
+}
+{ 
+    "_id" : ObjectId("5a4651cc73da5f2e899ff73d"), 
+    "name" : "三官庙村", 
+    "type" : ObjectId("5a4747867b44adb13e26aa05")
+}
+{ 
+    "_id" : ObjectId("5a4651cc73da5f2e899ff73e"), 
+    "name" : "高北村", 
+    "type" : ObjectId("5a4747867b44adb13e26aa05")
+}

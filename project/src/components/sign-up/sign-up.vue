@@ -28,9 +28,9 @@
           </FormItem>
         </Col>
       </Row>
-     <!--  <FormItem label="属于：" prop="belong">
-        <Cascader :data="signUp.belong" change-on-select filterable placeholder="请选择社区\村\企业"></Cascader>
-      </FormItem> -->
+      <FormItem label="属于：" prop="belong">
+        <Cascader v-model="signUp.belong" :render-format="formatBelong" :data="belongData" change-on-select filterable placeholder="请选择社区\村\企业"></Cascader>
+      </FormItem>
       <FormItem>
         <Button class="sl-submit" type="primary" @click="submit">提交</Button>
         <Button class="sl-reset" type="ghost" @click="reset">重新填写</Button>
@@ -42,6 +42,34 @@
 <script>
   import axios from 'axios'
   export default {
+    created () {
+      axios.get('/api/user/belong').then((result) => {
+        let {code,belongList} = result.data
+        let category = {
+          children: []
+        }
+        let bdata = []
+        // console.log(belongList)
+        if (code === 0) {
+          belongList.forEach((item) => {
+            // console.log(item)
+
+            if (category.value !== item.type._id ) {
+              category.value = item.type._id
+              category.label = item.type.name
+              
+              bdata.push(category)
+              category.children = []
+            }
+            category.children.push({
+              value: item._id,
+              label: item.name
+            })
+          })
+        }
+        // console.log(bdata)
+      })
+    },
     data () {
       const repasswordCheck = (rule,val,cb) => {
         if (val !== this.signUp.password) {
@@ -49,9 +77,6 @@
         } else {
           cb()
         }
-      }
-      const belongCheck = (rule,val,cb) => {
-        console.log(val);
       }
       const usernameCheck = (rule,val,cb) => {
         axios.get(`/api/user/check?username=${val}`).then((result) => {
@@ -69,53 +94,53 @@
           password: '',
           repassword: '',
           gender: '',
-          birthDate: ''
-          // ,
-          // belong: [
-          //   {
-          //     value: 'comunity',
-          //     label: '社区',
-          //     children: [
-          //       {
-          //         value: '0',
-          //         label: '青东社区'
-          //       },
-          //       {
-          //         value: '1',
-          //         label: '长乐西苑社区'
-          //       }
-          //     ]
-          //   },
-          //   {
-          //     value: 'village',
-          //     label: '村',
-          //     children: [
-          //       {
-          //         value: '0',
-          //         label: '东扬善村'
-          //       },
-          //       {
-          //         value: '1',
-          //         label: '楼阁台村'
-          //       }
-          //     ]
-          //   },
-          //   {
-          //     value: 'company',
-          //     label: '企业',
-          //     children: [
-          //       {
-          //         value: '0',
-          //         label: '汉港化工'
-          //       },
-          //       {
-          //         value: '1',
-          //         label: '巨坤花卉中心'
-          //       }
-          //     ]
-          //   }
-          // ]
+          birthDate: '',
+          belong: [],
         },
+        belongData: [
+          {
+            value: '0',
+            label: '社区',
+            children: [
+              {
+                value: '0',
+                label: '青东社区'
+              },
+              {
+                value: '1',
+                label: '长乐西苑社区'
+              }
+            ]
+          },
+          {
+            value: '1',
+            label: '村',
+            children: [
+              {
+                value: '2',
+                label: '东扬善村'
+              },
+              {
+                value: '3',
+                label: '楼阁台村'
+              }
+            ]
+          },
+          {
+            value: '2',
+            label: '企业',
+            children: [
+              {
+                value: '4',
+                label: '汉港化工'
+              },
+              {
+                value: '5',
+                label: '巨坤花卉中心'
+              }
+            ]
+          }
+        ],
         rule: {
           username: [
             {required: true, message: '用户名不能为空！',trigger: 'blur' },
@@ -125,7 +150,8 @@
             {required: true, message: '姓名不能为空！',trigger: 'blur' }
           ],
           password: [
-            {required: true, message: '密码不能为空！',trigger: 'blur' }
+            {required: true, message: '密码不能为空！',trigger: 'blur' },
+            {min: 6, message: '密码长度要大于6位',trigger: 'blur'}
           ],
           repassword: [
             {required: true, message: '确认密码不能为空！',trigger: 'blur' },
@@ -136,12 +162,10 @@
           ],
           birthDate: [
             {required: true, type: 'date', message: '出生日期不能为空！',trigger: 'change' }
+          ],
+          belong: [
+            {required: true, type: 'array', message: '社区（村、企业）不能为空！',trigger: 'change' },
           ]
-          // ,
-          // belong: [
-          //   {required: false, message: '社区（村、企业）不能为空！',trigger: 'blur' },
-          //   {validator: belongCheck, trigger: 'blur'}
-          // ]
         }
       }
     },
@@ -149,6 +173,8 @@
       submit () {
         this.$refs.signUp.validate( (valid) => {
           if (valid) {
+            console.log(this.signUp)
+            return
             axios.post('/api/user/signUp',{
               signUpInfo: this.signUp
             }).then((userInfo) => {
@@ -164,6 +190,9 @@
       },
       reset () {
         this.$refs.signUp.resetFields();
+      },
+      formatBelong (labels,values) {
+        return labels[labels.length-1]
       }
     }
   }

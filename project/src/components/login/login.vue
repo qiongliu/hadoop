@@ -56,6 +56,13 @@
 		       	</div>
 	       	</div>
        	</div>
+       	<div class="sl-operation">
+       		<span>我的操作：</span>
+       		<div>
+						<Tag color="blue"><span @click="viewInfromation">信息+</span></Tag>
+						<Button icon="ios-plus-empty" type="dashed" size="small" @click="addConcern">修改操作列表</Button>
+					</div>
+       	</div>
 				<div class="sl-concern">
 					<span>我的关注：</span>
 					<div>
@@ -64,7 +71,7 @@
 						<Tag color="blue">青东社区</Tag>
 						<Tag color="blue">庞马村</Tag>
 						<Tag color="blue">业务办理</Tag>
-						<Button icon="ios-plus-empty" type="dashed" size="small" @click="addConcern">修改关注</Button>
+						<Button icon="ios-plus-empty" type="dashed" size="small" @click="addConcern">修改关注列表</Button>
 					</div>
 				</div>
 			</div>
@@ -166,6 +173,9 @@
 				this.showModal = false
 				this.realname = userInfo.realname
 				this.$store.commit('role',userInfo.roleType)
+			},
+			viewInfromation () {
+				this.$router.push('/information')
 			},
 			addConcern () {
 

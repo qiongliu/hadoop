@@ -8,8 +8,8 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
 
-let index = require('./routes/index');
-let users = require('./routes/users');
+// let index = require('./routes/index');
+let article = require('./routes/article');
 let api = require('./routes/api');
 let config = require('./config');
 let User = require('./models/User');
@@ -28,6 +28,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/upload',express.static(path.join(__dirname,'upload')));
 
 app.use((req,res,next) => {
   req.cookies = new Cookies(req,res);
@@ -48,9 +49,9 @@ app.use((req,res,next) => {
     next();
   }
 });
-
+app.use('/favicon.ico',()=>{return;});
 app.use('/api',api);
-app.use('/', index);
+app.use('/article', article);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -78,9 +79,9 @@ db.on('error', () => {
 });
 db.once('open',() => {
   console.log("数据库连接成功！")
-});
-app.listen(app.get("port"),function(){
-  console.log('app listen...');
+  app.listen(app.get("port"),function(){
+    console.log('app listen...');
+  });
 });
 
 module.exports = app;
