@@ -1,16 +1,4 @@
-{ 
-    "_id" : ObjectId("5a4747867b44adb13e26aa05"), 
-    "name" : "村"
-}
-{ 
-    "_id" : ObjectId("5a4747867b44adb13e26aa06"), 
-    "name" : "社区"
-}
-{ 
-    "_id" : ObjectId("5a4747877b44adb13e26aa07"), 
-    "name" : "企业"
-}
-{ 
-    "_id" : ObjectId("5a4747877b44adb13e26aa08"), 
-    "name" : "街道"
-}
+{ "_id" : { "$oid" : "5a4747867b44adb13e26aa05" }, "name" : "村" }
+{ "_id" : { "$oid" : "5a4747867b44adb13e26aa06" }, "name" : "社区" }
+{ "_id" : { "$oid" : "5a4747877b44adb13e26aa07" }, "name" : "企业" }
+{ "_id" : { "$oid" : "5a4747877b44adb13e26aa08" }, "name" : "街道" }

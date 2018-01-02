@@ -1,12 +1,12 @@
 <template>
 	<div class="my-top">
-		<Affix>
+		<!-- <Affix> -->
 			<my-nav :navList="navList">
 				<div class="sl-logo fl">
-					<img src="./logo-w.png" :alt="logoAlt">
+					<!-- <img src="./logo-w.png" :alt="logoAlt"> -->
 				</div>
 			</my-nav>
-		</Affix>
+		<!-- </Affix> -->
 	</div>
 </template>
 

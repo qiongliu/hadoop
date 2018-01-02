@@ -1,7 +1,7 @@
 <template>
 	<div class="information">
 		<h2></h2>
-		<Tabs type="card" vlaue="">
+		<Tabs type="card" :animated="false" vlaue="">
       <TabPane label="本科室信息" name="">
       	<my-info-list></my-info-list>
       </TabPane>
@@ -17,12 +17,23 @@
 </template>
 
 <script>
+	import axios from 'axios'
 	import myInfoList from 'base/my-information-list/my-information-list'
 	import myInfoEdit from 'base/my-information-edit/my-information-edit'
 	export default {
 		components: {
 			myInfoList,
 			myInfoEdit
+		},
+		created () {
+			axios.get('/article/getSelfInformation').then((information) => {
+				this.getSelfInformation = information
+			})
+		},
+		data () {
+			return {
+				information: []
+			}
 		}
 	}
 </script>

@@ -36,10 +36,8 @@ app.use((req,res,next) => {
   req.userInfo = {};
   if(userInfo) {
     try {
-      req.userInfo.id = userInfo;
-      User.findById(req.userInfo.id).populate('role').then(function(result){
-        req.userInfo.roleType = result.role.type;
-        req.userInfo.realname = result.realname;
+      User.findById(userInfo).populate('role').then(function(result){
+        req.userInfo = result;
         next();
       });
     } catch (e){

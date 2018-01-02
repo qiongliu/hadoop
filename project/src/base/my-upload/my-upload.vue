@@ -27,8 +27,8 @@
             action="/article/uploadImg"
             name="upload"
             style="display: inline-block;width:58px;">
-            <div style="width: 58px;height:58px;line-height: 58px;">
-                <Icon type="camera" size="20"></Icon>
+            <div class="sl-icon-upload">
+                <Icon type="upload" size="50"></Icon>
             </div>
         </Upload>
         <Modal title="View Image" v-model="visible">
@@ -41,16 +41,7 @@
     export default {
         data () {
             return {
-                defaultList: [
-                    {
-                        'name': 'a42bdcc1178e62b4694c830f028db5c0',
-                        'url': 'https://o5wwk8baw.qnssl.com/a42bdcc1178e62b4694c830f028db5c0/avatar'
-                    },
-                    {
-                        'name': 'bc7521e033abdd1e92222d733590f104',
-                        'url': 'https://o5wwk8baw.qnssl.com/bc7521e033abdd1e92222d733590f104/avatar'
-                    }
-                ],
+                defaultList: [],
                 preViewSrc: '',
                 visible: false,
                 uploadList: []
@@ -64,10 +55,12 @@
             remove (file) {
                 const fileList = this.$refs.upload.fileList;
                 this.$refs.upload.fileList.splice(fileList.indexOf(file), 1);
+                this.$emit('getUploadSrc','remove',file.url)
             },
             handleSuccess (res, file) {
                 file.url = res.dir + '/' +　res.name;
                 file.name = res.name;
+                this.$emit('getUploadSrc','add',file.url)
             },
             handleFormatError (file) {
                 this.$Notice.warning({
@@ -82,10 +75,10 @@
                 });
             },
             handleBeforeUpload () {
-                const check = this.uploadList.length < 5;
+                const check = this.uploadList.length < 1;
                 if (!check) {
                     this.$Notice.warning({
-                        title: 'Up to five pictures can be uploaded.'
+                        title: '最多只能上传一张图片'
                     });
                 }
                 return check;
@@ -93,11 +86,15 @@
         },
         mounted () {
             this.uploadList = this.$refs.upload.fileList;
-            // console.log(this.$refs.upload.fileList)
         }
     }
 </script>
-<style>
+<style lang="scss" scoped>
+    .sl-icon-upload {
+        width: 58px;
+        height:58px;
+        line-height: 58px;
+    }
     .sl-upload-list{
         display: inline-block;
         width: 60px;

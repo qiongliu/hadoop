@@ -50,23 +50,23 @@
         }
         let bdata = []
         // console.log(belongList)
-        if (code === 0) {
-          belongList.forEach((item) => {
-            // console.log(item)
+        // if (code === 0) {
+        //   belongList.forEach((item) => {
+        //     // console.log(item)
 
-            if (category.value !== item.type._id ) {
-              category.value = item.type._id
-              category.label = item.type.name
+        //     if (category.value !== item.type._id ) {
+        //       category.value = item.type._id
+        //       category.label = item.type.name
               
-              bdata.push(category)
-              category.children = []
-            }
-            category.children.push({
-              value: item._id,
-              label: item.name
-            })
-          })
-        }
+        //       bdata.push(category)
+        //       category.children = []
+        //     }
+        //     category.children.push({
+        //       value: item._id,
+        //       label: item.name
+        //     })
+        //   })
+        // }
         // console.log(bdata)
       })
     },
@@ -99,11 +99,11 @@
         },
         belongData: [
           {
-            value: '0',
+            value: '5a4747867b44adb13e26aa06',
             label: '社区',
             children: [
               {
-                value: '0',
+                value: '5a4651cc73da5f2e899ff738',
                 label: '青东社区'
               },
               {
@@ -173,8 +173,8 @@
       submit () {
         this.$refs.signUp.validate( (valid) => {
           if (valid) {
-            console.log(this.signUp)
-            return
+            // console.log(this.signUp)
+            // return
             axios.post('/api/user/signUp',{
               signUpInfo: this.signUp
             }).then((userInfo) => {

@@ -19,7 +19,8 @@ router.use((res,req,next) => {
 });
 
 router.get('/autoLogin',(req,res) => {
-	let roleType = req.userInfo.roleType;
+	console.log(req.userInfo);
+	let roleType = req.userInfo.role.roleType;
 	if (roleType) {
 		resData.message = '用户已登录';
 		resData.roleType = roleType;
@@ -45,6 +46,7 @@ router.get('/user/check',(req,res) => {
 
 router.post('/user/signUp',(req,res,next) => {	
 	let signUpInfo = req.body.signUpInfo;
+	signUpInfo.belong = signUpInfo.belong[signUpInfo.belong.length - 1];
 	let md5 = crypto.createHash('md5');
 	signUpInfo.password = md5.update(signUpInfo.password + passwordSalt).digest('hex');
 	Role.findOne({type: 1}).then((roleInfo) => {
