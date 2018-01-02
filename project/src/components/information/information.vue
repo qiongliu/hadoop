@@ -3,7 +3,7 @@
 		<h2></h2>
 		<Tabs type="card" :animated="false" vlaue="">
       <TabPane label="本科室信息" name="">
-      	<my-info-list></my-info-list>
+      	<my-info-list :information="selfInformation"></my-info-list>
       </TabPane>
       <TabPane label="编写信息" name="">
       	<my-info-edit></my-info-edit>
@@ -27,12 +27,12 @@
 		},
 		created () {
 			axios.get('/article/getSelfInformation').then((information) => {
-				this.getSelfInformation = information
-			})
+				this.selfInformation = information.data.information
+			})				
 		},
 		data () {
 			return {
-				information: []
+				selfInformation: []
 			}
 		}
 	}

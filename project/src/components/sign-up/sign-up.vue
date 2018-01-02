@@ -139,6 +139,20 @@
                 label: '巨坤花卉中心'
               }
             ]
+          },
+          {
+            value: '5a4747877b44adb13e26aa08',
+            label: '街道办',
+            children: [
+              {
+                value: '5a4ae8a974b75616c841bd83',
+                label: '党政办'
+              },
+              {
+                value: '5a4ae8ec74b75616c841bd87',
+                label: '社区服务中心'
+              }
+            ]
           }
         ],
         rule: {

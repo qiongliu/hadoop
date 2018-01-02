@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-let belongSchema = new Schema({
+let componentSchema = new Schema({
 	name: String,
 	type: {
 		type: Schema.Types.ObjectId,
@@ -9,4 +9,4 @@ let belongSchema = new Schema({
 	}
 });
 
-module.exports = mongoose.model('Belong',belongSchema);
+module.exports = mongoose.model('Component',componentSchema);

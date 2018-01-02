@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 let User = require('../models/User');
 let Role = require('../models/Role');
-let Belong = require('../models/Belong');
+let Component = require('../models/Component');
 let Framework = require('../models/Framework');
 let code = require('../config').code;
 let passwordSalt = require('../config').passwordSalt;
@@ -19,11 +19,10 @@ router.use((res,req,next) => {
 });
 
 router.get('/autoLogin',(req,res) => {
-	console.log(req.userInfo);
-	let roleType = req.userInfo.role.roleType;
-	if (roleType) {
+	let role = req.userInfo.role;
+	if (role) {
 		resData.message = '用户已登录';
-		resData.roleType = roleType;
+		resData.roleType = role.type;
 		resData.realname = req.userInfo.realname;
 	} else {
 		resData.code = code.ok;
@@ -101,7 +100,7 @@ router.get('/user/signOut',(req,res) => {
 });
 
 router.get('/user/belong',(req,res) => {
-	Belong.find({}).populate('type').then((belongList) => {
+	Component.find({}).populate('type').then((belongList) => {
 		if (belongList) {
 			resData.message = '属于数据请求成功！';
 			resData.belongList = belongList;

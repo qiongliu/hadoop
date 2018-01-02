@@ -1,1 +1,13 @@
-{ "_id" : { "$oid" : "5a4b4c56e012111814b6dc66" }, "username" : "林一", "realname" : "电路分析", "password" : "e1534dbed5622d1c3df297ae02022876", "gender" : "男", "birthDate" : { "$date" : "2017-12-31T16:00:00.000+0000" }, "belong" : { "$oid" : "5a4651cc73da5f2e899ff738" }, "role" : { "$oid" : "5a459ac27facd310f554936d" }, "date" : { "$date" : "2018-01-02T09:07:43.866+0000" }, "isAutoLogin" : false, "__v" : 0 }
+{ 
+    "_id" : ObjectId("5a4b63267549f2276c3012e6"), 
+    "username" : "林一", 
+    "realname" : "电路分析", 
+    "password" : "c181339fe6e0f57a2df2e8abeebc3666", 
+    "gender" : "男", 
+    "birthDate" : ISODate("2017-12-31T16:00:00.000+0000"), 
+    "belong" : ObjectId("5a4ae8ec74b75616c841bd87"), 
+    "role" : ObjectId("5a459ac27facd310f554936d"), 
+    "date" : ISODate("2018-01-02T10:28:46.319+0000"), 
+    "isAutoLogin" : false, 
+    "__v" : NumberInt(0)
+}

@@ -3,9 +3,9 @@ const router = express.Router();
 const code = require('../config').code;
 const upload = require('../common/js/upload');
 const Framework = require('../models/Framework');
-const Belong = require('../models/Belong');
+const Component = require('../models/Component');
 const Information = require('../models/Information');
-// const User = require('../')
+const User = require('../models/User');
 
 /* GET article listing. */
 let resData = {};
@@ -20,7 +20,7 @@ router.use((req,res,next) => {
 
 router.get('/getDepartment',(req,res) => {
 	Framework.findOne({name: '街道'}).then((frameworkInfo) => {
-		return Belong.find({type: frameworkInfo._id})
+		return Component.find({type: frameworkInfo._id})
 	}).then((departmentInfo) => {
 		if (departmentInfo.length) {
 			resData.message = "科室列表查找成功！";
@@ -33,8 +33,17 @@ router.get('/getDepartment',(req,res) => {
 });
 
 router.get('/getSelfInformation',(req,res) => {
-	console.log(req.userInfo);
-	// Information.find({department: {$}})
+	Component.findOne({_id: req.userInfo.belong}).then((belong) => {
+		return Information.find({department: {$in:[belong.name]}})
+	}).then((information) => {
+		if (information.length) {
+			resData.message = "信息列表请求成功！";
+			resData.information = information;
+		} else {
+			resData.code = code.err;
+		}
+		res.json(resData);
+	});
 });
 
 router.post('/uploadImg', (req,res) => {

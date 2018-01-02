@@ -2,7 +2,8 @@
 	<div class="dynamic-list comWidth">
 		<Row>
 			<Col span="12">
-				<Tree :data="dynamicList" :load-data="loadData" @on-select-change="clickItem"></Tree>
+				<div v-for="item in information">{{item.date}}{{item.title}}</div>
+				<!-- <Tree :data="dynamicList" :load-data="loadData" @on-select-change="clickItem"></Tree> -->
 			</Col>
 			<Col span="12">
 				<router-view></router-view>
@@ -13,6 +14,14 @@
 
 <script>
 	export default {
+		props: {
+			information: {
+				type: Array,
+				default () {
+					return []
+				}
+			}
+		},
 		data () {
 			return {
 				dynamicList: [
