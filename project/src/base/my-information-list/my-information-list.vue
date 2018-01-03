@@ -1,30 +1,33 @@
 <template>
-	<div class="dynamic-list comWidth">
-		<Row>
-			<Col span="12">
-				<div v-for="item in information">{{item.date}}{{item.title}}</div>
-				<!-- <Tree :data="dynamicList" :load-data="loadData" @on-select-change="clickItem"></Tree> -->
+	<div class="information-list">
+		<Row :gutter="16">
+			<Col span="14">
+				<Tree :data="informationList" :load-data="loadData" @on-select-change="clickItem"></Tree>
 			</Col>
-			<Col span="12">
-				<router-view></router-view>
+			<Col span="10">
+				<my-information-preview :information="information"></my-information-preview>
 			</Col>
 		</Row>
 	</div>
 </template>
 
 <script>
+	import {formatDate} from 'common/js/base'
+	import myInformationPreview from 'base/my-information-preview/my-information-preview'
 	export default {
-		props: {
-			information: {
-				type: Array,
-				default () {
-					return []
-				}
-			}
+		components: {
+			myInformationPreview
 		},
 		data () {
 			return {
-				dynamicList: [
+				information: {
+					title: '',
+					date: new Date(),
+					department: [],
+					content: '',
+					uploadFile: []
+				},
+				informationList: [
 					{
 						title: '2017年，4月12日-4月19日（第十二周）',
 						expand: true,
@@ -35,7 +38,7 @@
 								url: '/1'
 							},
 							{
-								title: '动态2'
+								title: '未央区发改委联合汉城街办举行“节能低碳暨电力安全生产宣传活动节能低碳暨”'
 							}
 						]
 					},
@@ -87,7 +90,7 @@
 				},2000)
 			},
 			clickItem (m) {
-				this.$router.push('/dynamicList/1')
+				this.$router.push('/informationList/1')
 				// console.log(m[0].url)
 			}
 		}
@@ -95,9 +98,10 @@
 </script>
 
 <style lang="scss">
-	.dynamic-list {
+	@import '../../common/css/variable.scss';
+	.information-list {
 		.ivu-tree-title {
-			font-size: 16px;
+			font-size: $fz-sm;
 			white-space: pre-wrap;
 		}
 	}

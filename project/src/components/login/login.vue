@@ -50,7 +50,7 @@
 						<Avatar shape="square" icon="person" size="large" />
 	       	</Badge>
 	       	<div class="fl">
-	       	 	<p class="sl-letter">您有新信息，请及时<a href="javascript:;">查看</a></p>
+	       	 	<p class="sl-letter">{{realname}},您有新信息，请及时<a href="javascript:;">查看</a></p>
 		       	<div class="sl-userinfo">
 			       	<a href="javascript:;" class="">完善个人资料</a><span class="">我的空间</span><span class="sl-sign-out" @click="signOut">退出</span>
 		       	</div>
@@ -151,8 +151,8 @@
 					signInInfo: this.login
 				}).then((userInfo) => {
 					if (userInfo.data.code === 0) {
-						this.$store.commit('role',userInfo.data.roleType)
-						this.realname = userInfo.data.realname
+						this._setState(userInfo.data.userInfo)
+						this.$router.push({name: "subdistrict"})
 					} else {
 						this.usernameTipsContent = userInfo.data.message
 						this.usernameTips = !this.usernameTips
@@ -165,17 +165,22 @@
 			signOut () {
 				axios.get('/api/user/signOut').then((result) => {
 					if (result.data.code === 0) {
-						this.$store.commit('role', 0);
+						this.$store.commit('role', 0)
+						this.$router.push({path: '/'})
 					}
 				})
 			},
 			confirmSignUp (userInfo) {
 				this.showModal = false
-				this.realname = userInfo.realname
-				this.$store.commit('role',userInfo.roleType)
+				this._setState(userInfo.data.userInfo)
 			},
 			viewInfromation () {
 				this.$router.push('/information')
+			},
+			_setState (userInfo) {
+				this.realname = userInfo.realname
+				this.$store.commit('role',userInfo.role.type)
+				this.$store.commit('belong',userInfo.belong)
 			},
 			addConcern () {
 

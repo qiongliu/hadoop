@@ -34,7 +34,9 @@ router.get('/getDepartment',(req,res) => {
 
 router.get('/getSelfInformation',(req,res) => {
 	Component.findOne({_id: req.userInfo.belong}).then((belong) => {
-		return Information.find({department: {$in:[belong.name]}})
+		if (belong) {
+			return Information.find({department: {$in:[belong.name]}})
+		}
 	}).then((information) => {
 		if (information.length) {
 			resData.message = "信息列表请求成功！";

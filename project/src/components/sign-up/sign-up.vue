@@ -193,8 +193,8 @@
               signUpInfo: this.signUp
             }).then((userInfo) => {
               if (userInfo.data.code === 0) {
-                userInfo.data.username = this.signUp.username
-                this.$emit('confirmSignUp',userInfo.data)
+                // userInfo.data.userInfo.username = this.signUp.username
+                this.$emit('confirmSignUp',userInfo)
               }
             })
           } else {

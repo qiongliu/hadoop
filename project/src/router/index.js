@@ -5,6 +5,7 @@ import DynamicList from 'components/dynamic-list/dynamic-list'
 import DynamicDetail from 'components/dynamic-detail/dynamic-detail'
 import DynamicWrite from 'components/dynamic-write/dynamic-write'
 import Information from 'components/Information/Information'
+import subdistrict from 'components/subdistrict/subdistrict'
 
 Vue.use(Router)
 
@@ -18,6 +19,11 @@ export default new Router ({
 		{
 			path: '/index',
 			component: Index
+		},
+		{
+			path: '/subdistrict',
+			component: subdistrict,
+			name: 'subdistrict'
 		},
 		{
 			path: '/dynamicList',

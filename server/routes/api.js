@@ -1,12 +1,13 @@
 const crypto = require('crypto');
 const express = require('express');
 const router = express.Router();
-let User = require('../models/User');
-let Role = require('../models/Role');
-let Component = require('../models/Component');
-let Framework = require('../models/Framework');
-let code = require('../config').code;
-let passwordSalt = require('../config').passwordSalt;
+const User = require('../models/User');
+const Role = require('../models/Role');
+const Component = require('../models/Component');
+const Framework = require('../models/Framework');
+const code = require('../config').code;
+const passwordSalt = require('../config').passwordSalt;
+
 
 let resData = {};
 
@@ -56,8 +57,7 @@ router.post('/user/signUp',(req,res,next) => {
 		req.cookies.set('HP_USERINFO',userInfo._id);
 		resData.code = code.ok;
 		resData.message = "注册成功！";
-		resData.roleType = 1;
-		resData.realname = userInfo.realname;
+		resData.userInfo = userInfo;
 		res.json(resData);
 	})
 	.catch((err) => {
@@ -77,8 +77,7 @@ router.post('/user/signIn',(req,res) => {
 			let autoLoginTime = parseInt(signInInfo.autoLogin[0]) * 10;
 			req.cookies.set('HP_USERINFO',userInfo._id,{maxAge: 1000 * 60 * 60 * 24 * autoLoginTime});
 			resData.message = '登录成功！';
-			resData.roleType = userInfo.role.type;
-			resData.realname = userInfo.realname;
+			resData.userInfo = userInfo;
 		} else {
 			resData.code = code.err,
 			resData.message = '用户名或密码错误！';

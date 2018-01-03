@@ -1,5 +1,5 @@
 <template>
-	<div class="highlight-work">
+	<div class="highlight-work m-collapse">
 		<my-tab :titleInfo="titleInfo">
 				<Collapse v-model="highlight" accordion @on-change="clickCollapse">
 		        <Panel :name="'panel' + index" v-for="(item,index) in info" :key="item.id">
@@ -160,7 +160,7 @@
 
 <style lang="scss">
 	@import '../../common/css/variable.scss';
-	.highlight-work {
+	.m-collapse {
 		.ivu-collapse-header {
 			font-size: $fz-md;
 		}
