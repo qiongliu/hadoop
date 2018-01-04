@@ -3,9 +3,9 @@
 		<my-tab :titleInfo="titleInfo">
 			<Collapse v-model="unfold" accordion>
 				<Panel :name="'panle'+ item.id" v-for="(item,index) in targetData" :key="index">
-					{{item.departmentName}}<Tag>{{item.description}}</Tag>
+					{{item.departmentName}}{{item.description}}
 					<div slot="content">
-						<my-bar-line :chartOption="item.chartOption"></my-bar-line>
+						<my-echarts :chartOption="item.chartOption"></my-echarts>
 					</div>
 				</Panel>
 			</Collapse>
@@ -15,11 +15,11 @@
 
 <script>
 	import myTab from 'base/my-tab/my-tab'
-	import myBarLine from 'base/my-echarts/my-bar-line'
+	import myEcharts from 'base/my-echarts/my-echarts'
 	export default {
 		components: {
 			myTab,
-			myBarLine
+			myEcharts
 		},
 		created () {
 			this.targetData = [
@@ -28,82 +28,183 @@
 					departmentName: '社区服务中心',
 					description: '共有三项省考指标（新增就业人员、劳动转移就业人员、有条件城镇居民落户人员），一项市考指标（小额担保贷款）',
 					chartOption: {
-						tooltip: {
-			        trigger: 'axis',
-			        axisPointer: {
-			            type: 'cross',
-			            crossStyle: {
-			                color: '#999'
-			            }
-			        }
-			    },
-			    toolbox: {
-			        feature: {
+						width: 920,
+						height: 360,
+						option: {
+							tooltip: {
+					      trigger: 'axis',
+					      axisPointer: {
+					        type: 'cross',
+					        crossStyle: {
+					          color: '#999'
+					        }
+					      },
+					      alwaysShowContent: 'true',
+					      formatter (params) {
+					      	let dataStr = ''
+					      	params.forEach((item) => {
+					      		dataStr += `<tr><td><span class="icon-formatter" style="background-color: ${item.color}"></span>${item.seriesName}</td>
+					      		 <td>${item.value}</td>
+					      		 <td>${item.value/1000}%</td></tr>
+					      		`
+					      	})
+					      	let str = `<h2>${params[0].name}</h2><table class="sl-target-formatter">
+					      		<tr>
+					      			<th>指标名称</th>
+					      			<th>完成</th>
+					      			<th>占全年任务</th>
+					      		</tr>
+					      		${dataStr}
+					      		</table>`
+					      	return str
+					      }
+					    },
+					    toolbox: {
+				        feature: {
 			            dataView: {show: true, readOnly: false},
 			            magicType: {show: true, type: ['line', 'bar']},
 			            restore: {show: true},
 			            saveAsImage: {show: true}
-			        }
-			    },
-			    legend: {
-			        data:['蒸发量','降水量','平均温度']
-			    },
-			    xAxis: [
-			        {
+				        },
+				        right: 40
+					    },
+					    legend: {
+					      data:['新增就业','劳动力转移','进城落户','小额担保贷款']
+					    },
+					    xAxis: [
+				        {
 			            type: 'category',
-			            data: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
+			            data: ['1月','2月','3月','4月','5月','6月','7月','8月'],
 			            axisPointer: {
-			                type: 'shadow'
+		                type: 'shadow'
 			            }
-			        }
-			    ],
-			    yAxis: [
-			        {
+				        }
+					    ],
+					    yAxis: [
+				        {
 			            type: 'value',
-			            name: '水量',
 			            min: 0,
-			            max: 250,
-			            interval: 50,
+			            max: 'dataMax',
 			            axisLabel: {
-			                formatter: '{value} ml'
+			              formatter: '{value} 人'
 			            }
-			        },
-			        {
+				        },
+				        {
 			            type: 'value',
-			            name: '温度',
 			            min: 0,
-			            max: 25,
-			            interval: 5,
+			            max: 'dataMax',
 			            axisLabel: {
-			                formatter: '{value} °C'
+			              formatter: '{value} 万元'
 			            }
-			        }
-			    ],
-			    series: [
-			        {
-			            name:'蒸发量',
+				        }
+					    ],
+					    series: [
+				        {
+			            name:'新增就业',
 			            type:'bar',
-			            data:[2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3]
-			        },
-			        {
-			            name:'降水量',
+			            data:[242,195,432,32,14,271,43,53]
+				        },
+				        {
+			            name:'劳动力转移',
 			            type:'bar',
-			            data:[2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
-			        },
-			        {
-			            name:'平均温度',
+			            data:[4000,2143,423,754,924,54,657,335]
+				        },
+				        {
+			            name:'进城落户',
+			            type:'bar',
+			            data:[837,453,234,53,235,765,53,234,56,887,64,321]
+				        },
+				        {
+			            name:'小额担保贷款',
 			            type:'line',
 			            yAxisIndex: 1,
-			            data:[2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2]
-			        }
-			    ]
-								}
+			            data:[43,145,678,241,125,136,43,564]
+				        }
+					    ]
+						}
+					}
 				},
 				{
 					id: 1,
-					departmentName: '经济发展科',
+					departmentName: '社区服务中心',
 					description: '共有三项省考指标（新增就业人员、劳动转移就业人员、有条件城镇居民落户人员），一项市考指标（小额担保贷款）',
-					chartOption: {}
+					chartOption: {
+						width: 900,
+						height: 300,
+						option: {
+							tooltip: {
+					      trigger: 'axis',
+					      axisPointer: {
+					        type: 'cross',
+					        crossStyle: {
+					          color: '#999'
+					        }
+					      },
+		            alwaysShowContent: 'true'
+					    },
+					    toolbox: {
+					        feature: {
+					            dataView: {show: true, readOnly: false},
+					            magicType: {show: true, type: ['line', 'bar']},
+					            restore: {show: true},
+					            saveAsImage: {show: true}
+					        }
+					    },
+					    legend: {
+					        data:['新增就业','劳动力转移','进城落户','小额担保贷款']
+					    },
+					    xAxis: [
+					        {
+					            type: 'category',
+					            data: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
+					            axisPointer: {
+					                type: 'shadow'
+					            }
+					        }
+					    ],
+					    yAxis: [
+					        {
+					            type: 'value',
+					            min: 0,
+					            max: 'dataMax',
+					            axisLabel: {
+					                formatter: '{value} 人'
+					            }
+					        },
+					        {
+					            type: 'value',
+					            min: 0,
+					            max: 'dataMax',
+					            axisLabel: {
+					                formatter: '{value} 万元'
+					            }
+					        }
+					    ],
+					    series: [
+					        {
+					            name:'新增就业',
+					            type:'bar',
+					            data:[242,195,432,32,14,271,43,53,22,57,534,63]
+					        },
+					        {
+					            name:'劳动力转移',
+					            type:'bar',
+					            data:[4000,2143,423,754,924,54,657,335,676,443,215,546]
+					        },
+					        {
+					            name:'进城落户',
+					            type:'bar',
+					            data:[837,453,234,53,235,765,53,234,56,887,64,321]
+					        },
+					        {
+					            name:'小额担保贷款',
+					            type:'line',
+					            yAxisIndex: 1,
+					            data:[43,145,678,241,125,136,43,564,633,267,454,645]
+					        }
+					    ]
+						}
+					}
 				}
 			]
 		},
@@ -119,3 +220,23 @@
 		}
 	}
 </script>
+
+<style lang="scss">
+	.sl-target-formatter {
+		th {
+			padding: 0 10px;
+			text-align: center;
+		}
+		td {
+			text-align: left;
+			padding: 0 10px;
+		}
+	}
+	.icon-formatter {
+		display: inline-block;
+		width: 10px;
+		height: 10px;
+		border-radius: 50%;
+		margin-right: 10px;
+	}
+</style>
