@@ -14,7 +14,6 @@
 		<my-collapse :max-height="510">
 			<community></community>
 		</my-collapse>
-		<BackTop></BackTop>
 	</div>
 </template>
 

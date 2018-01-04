@@ -11,6 +11,7 @@
       </div>
     </keep-alive>
     <m-footer></m-footer>
+    <BackTop></BackTop>
 	</div>
 </template>
 
