@@ -24,6 +24,7 @@
 				chartOption: {
                     height: 500,
 					option: {
+						backgroundColor: '#fff',
     title: {
         text: '科室信息报送统计'
     },

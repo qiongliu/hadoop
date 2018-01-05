@@ -117,6 +117,7 @@
 			axios.get('/api/autoLogin').then((userInfo) => {
         this.$store.commit('role', userInfo.data.roleType)
 				this.realname = userInfo.data.realname
+				this.$router.push({name: "subdistrict"})
       })
 		},
 		data () {
@@ -152,7 +153,6 @@
 				}).then((userInfo) => {
 					if (userInfo.data.code === 0) {
 						this._setState(userInfo.data.userInfo)
-						this.$router.push({name: "subdistrict"})
 					} else {
 						this.usernameTipsContent = userInfo.data.message
 						this.usernameTips = !this.usernameTips
