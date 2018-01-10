@@ -115,9 +115,11 @@
 				}
 			})
 			axios.get('/api/autoLogin').then((userInfo) => {
-        this.$store.commit('role', userInfo.data.roleType)
-				this.realname = userInfo.data.realname
-				this.$router.push({name: "subdistrict"})
+				if (!userInfo.data.code) {
+	        this.$store.commit('role', userInfo.data.roleType)
+					this.realname = userInfo.data.realname
+					this.$router.push({name: "subdistrict"})					
+				}
       })
 		},
 		data () {

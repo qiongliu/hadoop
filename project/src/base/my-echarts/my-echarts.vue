@@ -6,7 +6,7 @@
 
 <script>
 	import echarts from 'echarts'
-	import 'echarts/map/js/xi1_an1'
+	// import 'echarts/map/js/xi1_an1'
 	export default {
 		props: {
 			chartOption: {

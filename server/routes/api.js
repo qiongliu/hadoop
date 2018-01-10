@@ -26,7 +26,7 @@ router.get('/autoLogin',(req,res) => {
 		resData.roleType = role.type;
 		resData.realname = req.userInfo.realname;
 	} else {
-		resData.code = code.ok;
+		resData.code = code.err;
 		resData.message = '用户未登录';
 		resData.roleType = 0;
 	}
