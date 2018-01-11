@@ -1,12 +1,12 @@
 <template>
 	<div class="my-top">
-		<!-- <Affix> -->
+		<Affix>
 			<my-nav :navList="navList">
 				<div class="sl-logo fl">
-					<!-- <img src="./logo-w.png" :alt="logoAlt"> -->
+					<img src="./logo-w.png" :alt="logoAlt">
 				</div>
 			</my-nav>
-		<!-- </Affix> -->
+		</Affix>
 	</div>
 </template>
 
@@ -42,17 +42,17 @@
 					},
 					{
 						id: 2,
-						name: '科室简介',
+						name: '亮点（重点）工作',
 						url: 'news'
 					},
 					{
 						id: 3,
-						name: '社区（村）简介',
+						name: '新闻公告',
 						url: ''
 					},
 					{
 						id: 4,
-						name: '业务办理',
+						name: '便民服务中心',
 						url: '',
 						sub: [
 							{
@@ -66,7 +66,12 @@
 								url: ''
 							}
 						]
-					}
+					},
+					{
+						id: 5,
+						name: '资源中心',
+						url: ''
+					},
 				]
 				// axios.get('/navList').then((res) => {
 				// 	console.log(res);

@@ -11,7 +11,7 @@
 					</FormItem>
 					<FormItem label="科室：" prop="department">
 						<CheckboxGroup v-model="information.department">
-							<Checkbox v-for="(item,index) in departmentData" :key="index" :label="item._id">{{item.name}}</Checkbox>
+							<Checkbox v-for="(item,index) in departmentData" :key="index" :label="item.name">{{item.name}}</Checkbox>
 						</CheckboxGroup>
 					</FormItem>
 					<FormItem label="上传图片：">

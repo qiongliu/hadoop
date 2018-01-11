@@ -26,7 +26,7 @@
 				{
 					id: 0,
 					departmentName: '社区服务中心',
-					description: '共有三项省考指标（新增就业人员、劳动转移就业人员、有条件城镇居民落户人员），一项市考指标（小额担保贷款）',
+					description: '',
 					chartOption: {
 						width: 920,
 						height: 360,
@@ -45,7 +45,7 @@
 					      	params.forEach((item) => {
 					      		dataStr += `<tr><td><span class="icon-formatter" style="background-color: ${item.color}"></span>${item.seriesName}</td>
 					      		 <td>${item.value}</td>
-					      		 <td>${item.value/1000}%</td></tr>
+					      		 <td>${item.value/80}%</td></tr>
 					      		`
 					      	})
 					      	let str = `<h2>${params[0].name}</h2><table class="sl-target-formatter">
@@ -126,8 +126,8 @@
 				},
 				{
 					id: 1,
-					departmentName: '社区服务中心',
-					description: '共有三项省考指标（新增就业人员、劳动转移就业人员、有条件城镇居民落户人员），一项市考指标（小额担保贷款）',
+					departmentName: '经济发展科',
+					description: '',
 					chartOption: {
 						width: 900,
 						height: 300,
