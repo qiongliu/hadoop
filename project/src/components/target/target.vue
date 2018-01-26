@@ -31,6 +31,10 @@
 						width: 920,
 						height: 360,
 						option: {
+							title: {
+								show: false,
+								text: '社区服务中心考核指标完成情况'
+							},
 							tooltip: {
 					      trigger: 'axis',
 					      axisPointer: {
@@ -39,7 +43,7 @@
 					          color: '#999'
 					        }
 					      },
-					      alwaysShowContent: 'true',
+					      alwaysShowContent: false,
 					      formatter (params) {
 					      	let dataStr = ''
 					      	params.forEach((item) => {
@@ -61,10 +65,12 @@
 					    },
 					    toolbox: {
 				        feature: {
-			            dataView: {show: true, readOnly: false},
-			            magicType: {show: true, type: ['line', 'bar']},
-			            restore: {show: true},
-			            saveAsImage: {show: true}
+			            dataView: {
+			            	readOnly: false
+			            },
+			            magicType: {type: ['line', 'bar']},
+			            restore: {},
+			            saveAsImage: {}
 				        },
 				        right: 40
 					    },
@@ -112,7 +118,7 @@
 				        {
 			            name:'进城落户',
 			            type:'bar',
-			            data:[837,453,234,53,235,765,53,234,56,887,64,321]
+			            data:[837,453,234,53,235,765,53,234]
 				        },
 				        {
 			            name:'小额担保贷款',

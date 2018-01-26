@@ -9,12 +9,12 @@
 <script>
 	import myTab from 'base/my-tab/my-tab'
 	import myEcharts from 'base/my-echarts/my-echarts'
+  import {formatDate} from 'common/js/base'
 	export default {	
 		components: {
 			myTab,
 			myEcharts
 		},
-
 		data () {
 			return {
 				titleInfo: {
@@ -22,149 +22,137 @@
 					description: '共报送信息300条，登报20条'
 				},
 				chartOption: {
-                    height: 500,
+          height: 500,
 					option: {
-						backgroundColor: '#fff',
-    title: {
-        text: '科室信息报送统计'
-    },
-    tooltip : {
-        trigger: 'axis',
-        axisPointer: {
-            type: 'cross',
-            label: {
-                backgroundColor: '#6a7985'
-            }
-        }
-    },
-    legend: {
-        data:['党政办','社区服务中心','经济发展科','市容科','社会事务科']
-    },
-    toolbox: {
-        feature: {
-            saveAsImage: {}
-        }
-    },
-    grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '3%',
-        containLabel: true
-    },
-    xAxis : [
-        {
-            type : 'category',
-            boundaryGap: false,
-            data : ['一月','二月','三月','四月','五月','六月','七月']
-        }
-    ],
-    yAxis : [
-        {
-            type : 'value'
-        }
-    ],
-    series : [
-        {
-            name:'党政办',
-            type:'line',
-            stack: '总量',
-            label: {
-                emphasis: {
-                    show: true, 
-                    position: 'right',
-                    color: '#fff',
-                    padding: 4,
-                    borderRadius: 6,
-                    backgroundColor: "#000"
+            title: {
+              show: false,
+              text: '科室信息报送统计'
+            },
+            legend: {
+              data:['党政办','社区服务中心','经济发展科','市容科']
+            },
+            toolbox: {
+              right: 10,
+              feature: {
+                saveAsImage: {},
+                dataView: {
+                  readOnly: false
+                },
+                dataZoom: {},
+                magicType: {type: ['line', 'bar']}
+              }
+            },
+            grid: {
+              left: 20,
+              right: 70,
+              bottom: 50,
+              containLabel: true
+            },
+            xAxis: [
+              {
+                type : 'time',
+                boundaryGap: false,
+                axisPointer: {
+                  show: true
                 }
-            },
-            markPoint: {
-                data: [
-                    {type: 'max', name: '最多'},
-                    {type: 'min', name: '最少'},
-                ]
-            },
-            areaStyle: {normal: {}},
-            data:[36, 32, 34, 26, 17, 42, 31]
-        },
-        {
-            name:'社区服务中心',
-            type:'line',
-            stack: '总量',
+              }
+            ],
+            yAxis: [
+              {
+                type : 'value'
+              }
+            ],
             label: {
-                emphasis: {
-                    show: true, 
-                    position: 'right',
-                    color: '#fff',
-                    padding: 4,
-                    borderRadius: 6,
-                    backgroundColor: "#000",
-                    formatter () {
-                        return '登报8条'
+              emphasis: {
+                show: true, 
+                position: 'right',
+                color: '#fff',
+                padding: 4,
+                borderRadius: 6,
+                backgroundColor: "#000"
+              }
+            },
+            dataZoom: {
+              filterMode: 'filter',
+              startValue: formatDate(new Date() - 60 * 60 * 24 * 4 * 1000),
+              endValue: formatDate(new Date()),
+              minValueSpan: 3600 * 24 * 1000 * 5
+            },
+            series: [
+              {
+                name:'党政办',
+                type:'line',
+                stack: '总量',
+                areaStyle: {normal: {}},
+                data: this.getEchartData()
+              },
+              {
+                name:'经济发展科',
+                type:'line',
+                stack: '总量',
+                areaStyle: {normal: {}},
+                data: this.getEchartData()
+              },
+              {
+                name:'社区服务中心',
+                type:'line',
+                stack: '总量',
+                areaStyle: {normal: {}},
+                data: this.getEchartData()
+              },
+              {
+                name:'市容科',
+                type:'line',
+                stack: '总量',
+                markPoint: {
+                  itemStyle: {
+                    normal: {
+                      color: '#000'
                     }
-                }
-            },
-            areaStyle: {normal: {}},
-            data:[16, 24, 22, 32, 16, 10, 28]
-        },
-        {
-            name:'经济发展科',
-            type:'line',
-            stack: '总量',
-            label: {
-                emphasis: {
-                    show: true, 
-                    position: 'right',
-                    color: '#fff',
-                    padding: 4,
-                    borderRadius: 6,
-                    backgroundColor: "#000",
-                    formatter () {
-                        return ''
+                  },
+                  label: {
+                    normal: {
+                      color: '#fff',
+                      formatter (param) {
+                        return `${param.value}条`
+                      }                          
+                    },
+                    emphasis: {
+                      position: 'inside',
+                      padding: 0
                     }
-                }
-            },
-            areaStyle: {normal: {}},
-            data:[12, 8, 32, 18, 10, 24, 13]
-        },
-        {
-            name:'市容科',
-            type:'line',
-            stack: '总量',
-            label: {
-                emphasis: {
-                    show: true, 
-                    position: 'right',
-                    color: '#fff',
-                    padding: 4,
-                    borderRadius: 6,
-                    backgroundColor: "#000"
-                }
-            },
-            areaStyle: {normal: {}},
-            data:[24, 36, 8, 34, 6, 15, 24]
-        },
-        {
-            name:'社会事务科',
-            type:'line',
-            stack: '总量',
-            label: {
-                emphasis: {
-                    show: true, 
-                    position: 'right',
-                    color: '#fff',
-                    padding: 4,
-                    borderRadius: 6,
-                    backgroundColor: "#000"
-                }
-            },
-            areaStyle: {normal: {}},
-            data:[8, 27, 12, 36, 32, 15, 22]
-        }
-    ]
-}
+                  },
+                  silent: false,
+                  data: [
+                    {
+                      type: 'max'
+                    },
+                    {
+                      type: 'min'
+                    }
+                  ]
+                },
+                areaStyle: {normal: {}},
+                data: this.getEchartData()
+              }
+            ]
+          }
 				}
 			}
-		}
+		},
+    methods: {
+      getEchartData () {
+        this.echartData = []
+        let now = new Date().getTime()
+        for (let i = 0; i < 100; i++) {
+          let arr = [formatDate(now - 60 * 60 * 24 * i * 1000),this._getRandom()]
+          this.echartData.push(arr)
+        }
+        return this.echartData
+      },
+      _getRandom () {
+        return parseInt(Math.random() * (10 - 0 + 1) + 0)
+      }
+    }
 	}
 </script>

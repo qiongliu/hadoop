@@ -38,7 +38,9 @@
 							option: {
 								legend: {},
 								grid: {
-									left: 'left'
+									left: 'left',
+									containLabel: true,
+									width: '88%'
 								},
 								tooltip: {
 									trigger: 'item',
@@ -72,49 +74,46 @@
 							    	type: 'piecewise',
 						        min: 60,
 						        max: 100,
+						        splitNumber: 4,
 						        dimension: 0,
-						        right: 0,
-						        top: -50,
-						        text: ['高', '文笔：低'], // 文本，默认为数值文本
-						        calculable: true,
-						        // itemWidth: 18,
-						        // itemHeight: 160,
+						        left: 'left',
+						        top: 0,
+						        showLabel: true,
+						        text: ['文笔：'], 
 						        textStyle: {
-					            color: '#3259B8',
-					            height: 56,
-					            fontSize: 11,
-					            lineHeight: 60,
+					            color: '#2d8cf0',
+					            fontSize: 12,
 						        },
 						        inRange: {
-					            color: ['#000', '#6e7d88']
+					            color: ['#6e7d88','#91bdc2','#cda495','#d94e5d']
 						        },
-						        padding: [50, 20],
-						        // orient: 'horizontal',
+						        orient: 'horizontal'
 							    },
 							    {
 							    	type: 'piecewise',
 						        min: 60,
 						        max: 100,
+						        splitNumber: 4,
 						        dimension: 1,
-						        right: 0,
-						        top: 200,
-						        text: ['高', '口才：低'], // 文本，默认为数值文本
+						        left: 500,
+						        top: 0,
+						        showLabel: true,
+						        text: ['口才：'], 
 						        calculable: true,
 						        textStyle: {
-					            color: '#3259B8',
-					            height: 56,
-					            fontSize: 11,
-					            lineHeight: 60,
+					            color: '#2d8cf0',
+					            fontSize: 12,
 						        },
 						        inRange: {
-					            color: ['#000', '#6e7d88']
+					            color: ['#6e7d88','#91bdc2','#cda495','#d94e5d']
 						        },
-						        padding: [50, 20]
+						        orient: 'horizontal'
 							    }
 						    ],
 								series: [
 									{
 										type: 'scatter',
+										symbolSize: 6,
 										data: this.getEchartData(),
 										label: {
 					            normal: {
@@ -126,6 +125,17 @@
 					            }
 					        	},
 						        markLine: {
+						        	silent: true,
+						        	lineStyle: {
+							        	normal: {
+							        		color: '#000'
+							        	},
+						        	},
+						        	label: {
+						        		normal: {
+							        		formatter: '{b}:{c}'
+						        		}
+						        	},
 					            data: [
 					            	{
 					                xAxis: this.computerXAxis(),
@@ -151,7 +161,7 @@
                    					 label: {
 			                        normal: {
 			                          position: 'insideBottomRight',
-			                          color: "#d4726f",
+			                          color: "#000",
 			                          fontSize: 20,
 			                        }
 			                   		},
@@ -163,7 +173,7 @@
 						        		],
 						        		[
 						        			{
-						        				name: '文笔、口才都很不错',
+						        				name: '优秀',
 						        				itemStyle: {
                         			normal: {
                            		color: 'transparent',
@@ -172,7 +182,7 @@
                    					 label: {
 			                        normal: {
 			                          position: 'insideBottomLeft',
-			                          color: "#d4726f",
+			                          color: "#000",
 			                          fontSize: 20,
 			                        }
 			                   		},
@@ -184,16 +194,16 @@
 						        		],
 						        		[
 						        			{
-						        				name: '文笔不错',
+						        				name: '文笔较好',
 						        				itemStyle: {
                         			normal: {
-                           		color: 'transparent',
+	                           		color: 'transparent',
                         			}
                    					 },
                    					 label: {
 			                        normal: {
 			                          position: 'insideTopLeft',
-			                          color: "#d4726f",
+			                          color: "#000",
 			                          fontSize: 20,
 			                        }
 			                   		},
@@ -214,7 +224,7 @@
                    					 label: {
 			                        normal: {
 			                          position: 'insideTopRight',
-			                          color: "#d4726f",
+			                          color: "#000",
 			                          fontSize: 20,
 			                        }
 			                   		},
@@ -237,8 +247,6 @@
 		methods: {
 			getEchartData () {
 				this.echartData = []
-				let random = parseInt(Math.random() * (100 - 60 + 1) + 60)
-				let i = 0
 				for (let i = 0; i < 100; i++) {
 					let arr = [this.getRandom(),this.getRandom(),`林${i}`]
 					this.echartData.push(arr)
